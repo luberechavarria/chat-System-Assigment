@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit{
       next:
         (data)=>{
           console.log(data)
-          if (data.valid == true){
-            this.newuser = new User(data.username,data.email,data.valid)
+          if (data.login == true){
+            this.newuser = new User(data.username,data.email,data.login)
             this.authService.setCurrentuser(this.newuser);
             this.router.navigate(['/home']);
           }else{
