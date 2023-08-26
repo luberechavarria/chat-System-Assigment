@@ -1,7 +1,6 @@
 import { Component, OnInit,inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Car } from '../../car';
-import { DataService } from '../../service/data.service';
 import { AuthService } from '../../service/auth.service';
 import {User} from "../../user";
 // import { ActivatedRoute } from '@angular/router';

@@ -1,9 +1,12 @@
-const userService = require('../services/userService');
+const groupService = require('../services/groupService');
 
-const login = (req, res) => {
-  console.log("getting server top login")
+const createGroup = (req, res) => {
+  console.log("getting server top channel")
 
-  const users = userService.getUsers(); // Call the getUsers function from the userService module
+
+
+  const groups = groupService.getGroups(); // Call the getGroups function from the userService module
+
 
   if (!req.body) {
     return res.sendStatus(400);

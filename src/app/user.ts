@@ -6,7 +6,7 @@ export class User {
   user: boolean;
   superAdmin: boolean;
   groupAdmin: boolean;
- 
+  roomsJoined: [string];
   avatar?:string;
   constructor(
     username:string= '',
@@ -16,6 +16,7 @@ export class User {
     user:boolean = true,
     superAdmin:boolean = false,
     groupAdmin:boolean = false,
+    roomsJoined:[string] = [""],
     avatar:string= ""
   ){
     this.username = username;
@@ -25,6 +26,7 @@ export class User {
     this.user = user;
     this.superAdmin = superAdmin;
     this.groupAdmin = groupAdmin;
+    this.roomsJoined = roomsJoined;
     this.avatar = avatar
   }
 }
