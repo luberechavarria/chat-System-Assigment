@@ -1,34 +1,30 @@
-<div class="container" >
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
-    <div id="topheader" class="collapse navbar-collapse myFlex" id="navbarNav">
-      <ul class="navbar-nav nav " >
-        <li class="nav-item" >
-          <a (click)="setActive('home')" [class.tapActive]=home href="/home" class="nav-link sizeFont" aria-current="page">home</a>
-        </li>
-        <li class="nav-item">
-          <a (click)="setActive('account')" [class.tapActive]=account href="/account" class="nav-link sizeFont" >Account</a>
-        </li>
-        <li class="nav-item">
-          <a (click)="setActive('profile')" [class.tapActive]=profile class="nav-link sizeFont" href="/profile" >Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link sizeFont" href="/login" *ngIf="!isLoggedin">login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link sizeFont" href="" (click) ="logout($event)" *ngIf="isLoggedin">Logout</a>
-        </li>
-      </ul>
-    </div>
+  <div class="container-fluid appMargin " >
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid header ">
+      <div id="topheader" class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav nav " >
+          <li class="nav-item" >
+            <a (click)="setActive('home')" [class.tapActive]=home href="/home" class="nav-link sizeFont" aria-current="page">home</a>
+          </li>
+          <li class="nav-item">
+            <a (click)="setActive('account')" [class.tapActive]=account href="/account" class="nav-link sizeFont" >Account</a>
+          </li>
+          <li class="nav-item">
+            <a (click)="setActive('profile')" [class.tapActive]=profile class="nav-link sizeFont" href="/profile" >Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link sizeFont" href="/login" *ngIf="!isLoggedin">login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link sizeFont" href="" (click) ="logout($event)" *ngIf="isLoggedin">Logout</a>
+          </li>
+        </ul>
+      </div>
+      </div>
+    </nav>
   </div>
-</nav>
-</div>
-<div class="container" >
-    <router-outlet></router-outlet>
-</div>
+  <div class="container-main-chat" >
+      <router-outlet></router-outlet>
+  </div>
 
 

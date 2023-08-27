@@ -16,21 +16,56 @@ body {
 }
 .chat-container {
   display: flex;
-  height: 100vh;
+  height: 100%;
 }
 .channel-list {
   flex: 1;
   background-color: #f0f0f0;
   padding: 20px;
   border-right: 1px solid #ccc;
+  background: rgb(118, 118, 175);
 }
+
+.user-list {
+  flex: 4;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+  background: #f0f0f0;
+
+}
+
 .group-list {
-  flex: 2;
+  flex: 1;
   background-color: #f5f5f5;
   padding: 20px;
+  background: #484494;
 }
 .chat-box {
-  flex: 4;
+  flex: 8;
   padding: 20px;
   overflow-y: scroll;
+  background: #f5f5f5;
 }
+
+.channel-li {
+  color: white;
+}
+
+.channel-h2 {
+  color: white;
+}
+
+.group-li {
+  color: white;
+}
+
+.group-h2 {
+  color: white;
+}
+
+.card-body-size {
+  height: 900px;
+  
+}
+

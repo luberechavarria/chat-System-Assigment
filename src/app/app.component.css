@@ -8,6 +8,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
+  color: white;
 }
 
 .tapActive {
@@ -15,8 +16,22 @@
   text-decoration: underline ;
 }
 
-/* .header-links .active {
-  color: black;
-  text-decoration: underline;
-} */
+.header {
+  background: #c1c2c6;
+  height: 80px;
+  width: 100%;
+}
+
+.container-main-chat {
+  height: 90%;
+  padding-left: 13px;
+}
+
+.mt-0 {
+  margin-bottom: 0 !important;
+}
+
+.navbar {
+  padding-bottom: 0;
+}
 

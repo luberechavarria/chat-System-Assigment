@@ -1,49 +1,51 @@
-<div class="container">
-  <div class="row justify-content-center mt-5">
-      <div class="col-md-6">
-          <div class="card">
-              <div class="card-header">
-                  <h1 class="text-center">Welcome to Our Chat</h1>
-              </div>
-              <div class="card-body" id="chat-content">
-                  <!-- Chat messages will be displayed here -->
-              </div>
-              <div class="card-footer">
-                  <div class="input-group">
-                      <input type="text" class="form-control" id="user-message" placeholder="Type your message...">
-                      <button class="btn btn-primary" id="send-button">Send</button>
+<div class="chat-container">
+  <div class="group-list">
+  <h2 class="group-h2">Groups</h2>
+  <ul class="group-li">
+    <li>Group A</li>
+    <li>Group B</li>
+    <!-- Add more groups here -->
+  </ul>
+  </div>
+  <div class="channel-list">
+    <h2 class="channel-h2">Channels</h2>
+    <ul class="channel-li">
+      <li>#general</li>
+      <li>#random</li>
+      <!-- Add more channels here -->
+    </ul>
+  </div>
+  <div class="user-list">
+    <h2 class="channel-group">users</h2>
+    <ul>
+      <li>Luber Echavarria</li>
+      <li>Marcela Cuellar</li>
+      <li>Sarai Echavarria</li>
+      <!-- Add more users here -->
+    </ul>
+  </div>
+
+  <div class="chat-box">
+    <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header">
+                      <h1 class="text-center">Welcome to Our Chat</h1>
+                  </div>
+                  <div class="card-body card-body-size" id="chat-content">
+                    <!-- Chat messages will be displayed here -->
+                    
+                  </div>
+                  <div class="card-footer">
+                      <div class="input-group">
+                          <input type="text" class="form-control" id="user-message" placeholder="Type your message...">
+                          <button class="btn btn-primary" id="send-button">Send</button>
+                      </div>
                   </div>
               </div>
           </div>
       </div>
+    </div>
   </div>
 </div>
-
-<div class="chat-container">
-    <div class="channel-list">
-      <h2>Channels</h2>
-      <ul>
-        <li>#general</li>
-        <li>#random</li>
-        <!-- Add more channels here -->
-      </ul>
-    </div>
-    <div class="group-list">
-      <h2>Groups</h2>
-      <ul>
-        <li>Group A</li>
-        <li>Group B</li>
-        <!-- Add more groups here -->
-      </ul>
-    </div>
-    <div class="chat-box">
-      <h2>#general</h2>
-      <div class="message">
-        <p><strong>User1:</strong> Hello, everyone!</p>
-      </div>
-      <div class="message">
-        <p><strong>User2:</strong> Hey there!</p>
-      </div>
-      <!-- Add more messages here -->
-    </div>
-  </div>
