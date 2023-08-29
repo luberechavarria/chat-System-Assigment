@@ -1,30 +1,25 @@
 
 const channelService = require('../services/channelService');
 
-const createChannel = (req, res) => {
-  console.log("getting server top createChannel")
+const getChannels = (req, res) => {
+  console.log("getting server top getChannels", req.body)
 
 
-  const groups = channelService.getChannels(); // Call the getChannels function from the userService module
+  const channels = channelService.getChannels(); // Call the getChannels function from the userService module
 
   if (!req.body) {
     return res.sendStatus(400);
   }
 
-  let user;
-  
+  const arrayChannels = [];
+
   for (let i=0; i<channels.length; i++){
-   if (req.body.email == channels[i].email && req.body.upwd == channels[i].pwd) {
-    channels[i].login = true;
-    user = channels[i];
+   if (req.body.groupId == channels[i].group) {// if groupId match group in channel, bring that channel
+    arrayChannels.push(channels[i])
    }
   };
 
-  if(!user){
-    user = {'username':'', 'email': '', 'pwd': '', 'superAdmin': false, 'groupAdmin': false, 'user': true, 'login': false, 'roomsJoined': []}
-  }
-  
-  res.send(user);
+  res.send(arrayChannels);
 }
 
-module.exports = {createChannel};
+module.exports = {getChannels};

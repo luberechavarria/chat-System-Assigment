@@ -66,6 +66,9 @@ body {
 
 .card-body-size {
   height: 900px;
-  
+}
+
+.groupsButton {
+  background: none;
 }
 

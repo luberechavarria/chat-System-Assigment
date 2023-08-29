@@ -10,6 +10,7 @@ import {User} from '../user';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
+  
   isLoggedin(){
     if (sessionStorage.getItem('currentUser')){
       return true;

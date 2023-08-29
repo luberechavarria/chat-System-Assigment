@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent implements OnInit{
   errormsg = "";
+
+ 
   newuser:User = new User();
   email:string = "";
   pwd:string = "";
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit{
   private authService = inject(AuthService);
   
   ngOnInit() {
-    
+ 
   }
   
   signin(event:any){
@@ -34,7 +36,16 @@ export class LoginComponent implements OnInit{
         (data)=>{
           console.log(data)
           if (data.login == true){
-            this.newuser = new User(data.username,data.email,data.login)
+            this.newuser = new User(
+              data.id,
+              data.username,
+              data.email,
+              data.login,
+              data.pwd,
+              data.roles,
+              data.groups,
+              data.avatar
+          )
             this.authService.setCurrentuser(this.newuser);
             this.router.navigate(['/home']);
           }else{
@@ -50,6 +61,6 @@ export class LoginComponent implements OnInit{
    
   })
 
-}
+  }
 
 }

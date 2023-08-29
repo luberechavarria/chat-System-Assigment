@@ -5,4 +5,6 @@ const users = require("../controllers/users");
 
 router.post('/login', users.login);
 
+router.post('/getUsersChannel', users.getUsersChannel);
+
 module.exports = router;

@@ -1,26 +1,22 @@
 <div class="chat-container">
   <div class="group-list">
-  <h2 class="group-h2">Groups</h2>
-  <ul class="group-li">
-    <li>Group A</li>
-    <li>Group B</li>
-    <!-- Add more groups here -->
+  <!-- <h2 class="group-h2" (click)="fetchGroups()">Groups</h2> -->
+  <h2 class="group-h2" >Groups</h2>
+  <ul class="group-li" *ngFor="let group of groupsArray">
+    <li><button class="groupsButton"(click)="fetchChannels(group.id)">{{ group.name }}</button></li>
   </ul>
   </div>
   <div class="channel-list">
     <h2 class="channel-h2">Channels</h2>
-    <ul class="channel-li">
-      <li>#general</li>
-      <li>#random</li>
+    <ul class="channel-li" *ngFor="let channel of channelsArray">
+      <li><button class="groupsButton"(click)="fetchUsersChannel(channel.id)">{{ channel.name }}</button></li>
       <!-- Add more channels here -->
     </ul>
   </div>
   <div class="user-list">
     <h2 class="channel-group">users</h2>
-    <ul>
-      <li>Luber Echavarria</li>
-      <li>Marcela Cuellar</li>
-      <li>Sarai Echavarria</li>
+    <ul *ngFor="let usersChannel of usersChannelArray">
+      <li>{{ usersChannel.username }}</li>
       <!-- Add more users here -->
     </ul>
   </div>

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const channels = require("../controllers/channels");
 
-router.post('/createChannel', channels.createChannel);
+router.post('/getChannels', channels.getChannels);
 
 
 module.exports = router;

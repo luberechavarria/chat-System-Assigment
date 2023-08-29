@@ -4,6 +4,8 @@ let app = express();
 let bodyParser = require('body-parser');
 
 const userRoutes = require("./routes/users");
+const groupsRoutes = require("./routes/groups");
+const channelsRoutes = require("./routes/channels");
 
 app.use(bodyParser.json());
 
@@ -24,6 +26,8 @@ const validate = (req, res, next) => {
 
 
 app.use("/api", validate, userRoutes);
+app.use("/api", validate, groupsRoutes);
+app.use("/api", validate, channelsRoutes);
 
 app.get('/', function(req, res) {
   console.log("Server is being reach to this point")
