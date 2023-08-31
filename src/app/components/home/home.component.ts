@@ -23,9 +23,16 @@ export class HomeComponent implements OnInit{
 
   errormsg = "";
   currentuser:any = new User();
-  groupsArray:any = new Groups();
-  channelsArray:any = new Groups();
   usersChannelArray:any = new User();
+
+  groupsArray:any = new Groups();
+  
+  channelsArray:any = new Groups();
+  newGroupName:string = ''
+
+  public show:boolean = false;
+  public buttonName:any = 'Show';
+  
   
   private router = inject(Router)
   private GroupsService = inject(GroupsService);
@@ -36,6 +43,34 @@ export class HomeComponent implements OnInit{
   ngOnInit() {
     this.currentuser = JSON.parse(this.authService.getCurrentuser() || '{}');
     this.fetchGroups()
+  }
+
+  toggle() {
+    this.show = !this.show;
+
+    // Change the name of the button.
+    if(this.show){  
+      this.buttonName = "Hide";
+    }else{
+      this.buttonName = "Show";
+    }
+  }
+
+  createGroup(){
+    console.log("at get groups, before request aaaaaaaaa", this.currentuser);
+    this.GroupsService.createGroup(this.currentuser, this.newGroupName).subscribe({
+      next:
+        (data: any)=>{
+          if (Array.isArray(data)) {
+            this.groupsArray = data.map((groupData: any) => new Groups(groupData.id, groupData.name));
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem with the groups";
+      }
+    })
   }
 
   fetchGroups(){

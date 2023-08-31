@@ -25,5 +25,9 @@ export class GroupsService {
   getGroups(user:any){
     return this.http.post<Groups>('http://localhost:3000/api/getGroups', user);
   }
+
+  createGroup(user:any, newGroupName:string){
+    return this.http.post<Groups>('http://localhost:3000/api/getGroups', {user: user, newGroupName: newGroupName});
+  }
   
 }
