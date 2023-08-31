@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit{
       next:
         (data)=>{
           console.log(data)
+          
           if (data.login == true){
             this.newuser = new User(
               data.id,

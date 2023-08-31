@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit{
 
   fetchGroups(){
     console.log("at get groups, before request aaaaaaaaa", this.currentuser);
-    this.GroupsService.getGroups(this.currentuser).subscribe({
+    this.GroupsService.getGroups({user: this.currentuser}).subscribe({
       next:
         (data: any)=>{
           if (Array.isArray(data)) {
