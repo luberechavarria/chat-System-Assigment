@@ -2,7 +2,7 @@ const userService = require('../services/userService');
 const channelService = require('../services/channelService');
 
 const login = (req, res) => {
-  console.log("getting server top login", req.body)
+  // console.log("getting server top login", req.body)
 
   if (!req.body) {
     return res.sendStatus(400);

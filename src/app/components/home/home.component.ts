@@ -56,11 +56,12 @@ export class HomeComponent implements OnInit{
     }
   }
 
-  createGroup(){
-    console.log("at get groups, before request aaaaaaaaa", this.currentuser);
+  createGroup(event:any){
+    event.preventDefault();
     this.GroupsService.createGroup(this.currentuser, this.newGroupName).subscribe({
       next:
         (data: any)=>{
+          this.toggle();//hide window to create groups
           if (Array.isArray(data)) {
             this.groupsArray = data.map((groupData: any) => new Groups(groupData.id, groupData.name));
           } else {

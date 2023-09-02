@@ -6,10 +6,10 @@
     <li><button class="groupsButton"(click)="fetchChannels(group.id)">{{ group.name }}</button></li>
   </ul>
   <ng-container *ngIf="show">
-    <form>
+    <form (submit)="createGroup($event)">
       <div class="form-group">
         <label class="white" for="exampleInputEmail1">New group name</label>
-        <input type="text" class="form-control" id="createNewGroupId" aria-describedby="emailHelp" placeholder="Enter name">
+        <input type="text" [(ngModel)]="newGroupName" name="newGroupName" class="form-control" id="createNewGroupId"  placeholder="Enter name">
       </div>
       <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
     </form>

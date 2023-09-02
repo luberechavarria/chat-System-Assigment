@@ -27,7 +27,7 @@ const getGroups = (req, res) => {
 }
 
 const createGroup = (req, res) => {
-  
+    console.log("getting server top getGroups", req.body)
   if (!req.body) {
     return res.sendStatus(400);
   }
@@ -35,13 +35,10 @@ const createGroup = (req, res) => {
  
   if ( req.body.user.roles.includes('superAdmin')){
     const newGroup = groupService.createGroup(req.body.newGroupName); // Call the getGroups function from the userService module
-
     res.send(newGroup);
   }else{
     res.send('This user can not create groups');
   }
 }
-
-
 
 module.exports = {getGroups, createGroup};
