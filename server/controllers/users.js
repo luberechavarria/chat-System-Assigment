@@ -43,4 +43,19 @@ const getUsersChannel = (req, res) => {
   res.send(userChannel);
 }
 
-module.exports = { login, getUsersChannel };
+const promoteUserAsAdmin = (req, res) => {
+  console.log("promoteUserAsAdmin", req.body)
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
+
+
+  if ( req.body.user.roles.includes('superAdmin')){
+    const userPromotedAsAdmin = userService.promoteUserAsAdmin(req.body.promoteUserEmail, req.body.groupIdSelected); // Call the getGroups function from the userService module
+    res.send(userPromotedAsAdmin);
+  }else{
+    res.send('This user can not promote users to admin');
+  }
+}
+
+module.exports = { login, getUsersChannel, promoteUserAsAdmin };

@@ -2,8 +2,7 @@
 const channelService = require('../services/channelService');
 
 const getChannels = (req, res) => {
-  console.log("getting server top getChannels", req.body)
-
+  // console.log("getting server top getChannels", req.body)
 
   const channels = channelService.getChannels(); // Call the getChannels function from the userService module
 

@@ -1,21 +1,40 @@
 <div class="chat-container">
   <div class="group-list">
-  <!-- <h2 class="group-h2" (click)="fetchGroups()">Groups</h2> -->
-  <h2 class="group-h2" >Groups</h2>
-  <ul class="group-li" *ngFor="let group of groupsArray">
-    <li><button class="groupsButton"(click)="fetchChannels(group.id)">{{ group.name }}</button></li>
-  </ul>
-  <ng-container *ngIf="show">
-    <form (submit)="createGroup($event)">
-      <div class="form-group">
-        <label class="white" for="exampleInputEmail1">New group name</label>
-        <input type="text" [(ngModel)]="newGroupName" name="newGroupName" class="form-control" id="createNewGroupId"  placeholder="Enter name">
-      </div>
-      <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
-    </form>
-  </ng-container>
-  <button class="createGroupButton" (click)="toggle()" id="bt">Create group</button>
+    <!-- <h2 class="group-h2" (click)="fetchGroups()">Groups</h2> -->
+    <h2 class="group-h2" >Groups</h2>
+    <ul class="group-li" *ngFor="let group of groupsArray">
+      <!-- <li><button class="groupsButton groupNotSelected" (click)="fetchChannels(group.id)">{{ group.name }}</button></li> -->
+      <li><button [ngClass]="{'groupSelectedClass': group.id === groupIdSelected}" class="groupsButton" (click)="fetchChannels(group.id)">{{ group.name }}</button></li>
+
+    </ul>
+
+     <!-- createGroup start-->
+    <ng-container *ngIf="show">
+      <form (submit)="createGroup($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">New group name</label>
+          <input type="text" [(ngModel)]="newGroupName" name="newGroupName" class="form-control" id="createNewGroupId"  placeholder="Enter name">
+        </div>
+        <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showCreateGroupBtn()" id="bt">Create group</button>
+    <!-- createGroup end-->
+
+    <!-- Promote user to Admin start-->
+    <ng-container *ngIf="show1">
+      <form (submit)="promoteUserToAdmin($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Email user</label>
+          <input type="text" [(ngModel)]="promoteUserAsAdmin"  name="promoteUserAsAdmin" class="form-control" id="promoteUserAsAdmin"  placeholder="Email user">
+        </div>
+        <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showPromoteUserAdminBtn()" id="bt">Promote user Admin</button>
+    <!-- Promote user to Admin end-->
   </div>
+
   <div class="channel-list">
     <h2 class="channel-h2">Channels</h2>
     <ul class="channel-li" *ngFor="let channel of channelsArray">
@@ -23,9 +42,10 @@
       <!-- Add more channels here -->
     </ul>
   </div>
+
   <div class="user-list">
     <h2 class="channel-group">users</h2>
-    <ul *ngFor="let usersChannel of usersChannelArray">
+    <ul *ngFor="let usersChannel of arrayUsersChannels">
       <li>{{ usersChannel.username }}</li>
       <!-- Add more users here -->
     </ul>
@@ -55,3 +75,4 @@
     </div>
   </div>
 </div>
+

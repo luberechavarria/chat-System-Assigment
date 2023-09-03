@@ -43,7 +43,7 @@ function getGroups(role, groupsId) {
 }
 
 function createGroup(newGroupName) {
-  groups.push({'id': 5, 'name': newGroupName})
+  groups.push({'id': groups.length + 1, 'name': newGroupName})
 
   return groups;
 }

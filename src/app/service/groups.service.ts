@@ -30,4 +30,5 @@ export class GroupsService {
     return this.http.post<Groups>('http://localhost:3000/api/createGroup', {user: user, newGroupName: newGroupName});
   }
   
+
 }

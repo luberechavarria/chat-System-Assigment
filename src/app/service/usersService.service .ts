@@ -9,7 +9,7 @@ import {User} from "../user";
 @Injectable({
   providedIn: 'root'
 })
-export class usersChannelsService {
+export class usersService {
   private http = inject(HttpClient);
   private router = inject(Router);
   
@@ -24,6 +24,10 @@ export class usersChannelsService {
 
   getUsersChannel(channelId:number){
     return this.http.post<Channels>('http://localhost:3000/api/getUsersChannel', {channelId: channelId});
+  }
+
+  promoteUserToAdmin(user:any, promoteUserEmail: string, groupIdSelected:number){
+    return this.http.post<User>('http://localhost:3000/api/promoteUserAsAdmin', {user: user, promoteUserEmail, groupIdSelected});
   }
   
 }

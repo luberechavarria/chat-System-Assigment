@@ -7,4 +7,6 @@ router.post('/login', users.login);
 
 router.post('/getUsersChannel', users.getUsersChannel);
 
+router.post('/promoteUserAsAdmin', users.promoteUserAsAdmin);
+
 module.exports = router;
