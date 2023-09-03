@@ -21,6 +21,8 @@ import { AuthService } from '../../service/auth.service';
 export class HomeComponent implements OnInit{
   
   groupIdSelected = 0; // Keep highLight the group selected
+  channelIdSelected = 0; // Keep highLight the channelIdSelected selected
+  userIdSelected = 0; // Keep highLight the userIdSelected selected
 
 
   errormsg = "";
@@ -37,12 +39,17 @@ export class HomeComponent implements OnInit{
   selectedMenuItem: string | null = null;
 
   public show:boolean = false;
-  public buttonName:any = 'show';
+  public buttonName:string = 'show';
 
   public show1:boolean = false;
-  public buttonName1:any = 'show1';
+  public buttonName1:string = 'show1';
 
-  promoteUserAsAdmin:any = '';
+  public show2:boolean = false;
+  public buttonName2:string = 'show';
+
+  promoteUserAsAdmin:string = '';
+
+  removeUserEmail:string = '';
   
   
   private router = inject(Router)
@@ -76,6 +83,18 @@ export class HomeComponent implements OnInit{
     }
   }
 
+   // hide and show window showRemoveChatUser.
+   showRemoveChatUser() {
+    this.show2 = !this.show2;
+    if(this.show2){  
+      this.buttonName2 = "Hide1";
+    }else{
+      this.buttonName2 = "Show1";
+    }
+  }
+
+ 
+
   createGroup(event:any){
     event.preventDefault();
     this.GroupsService.createGroup(this.currentuser, this.newGroupName).subscribe({
@@ -95,11 +114,29 @@ export class HomeComponent implements OnInit{
   }
 
   promoteUserToAdmin(event:any){
- 
     this.usersService.promoteUserToAdmin(this.currentuser, this.promoteUserAsAdmin, this.groupIdSelected).subscribe({
       next:
         (data: any)=>{
-          console.log(" promoteUserToAdmin user", data);
+          this.showPromoteUserAdminBtn();//hide window to create to promote user as admin
+          if (data.login == true){
+            //successful, send message here to show somewhere, I got user for in case I need
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem promoting this user to admin";
+      }
+    })
+  }
+
+  removeChatUser(event:any){
+    // I have not set yet what t send for server here an dhow highlight users
+    // this.userIdSelected = this.removeUserEmail;
+    this.usersService.removeUserChat(this.currentuser, this.removeUserEmail).subscribe({
+      next:
+        (data: any)=>{
+          console.log(" removeUserChat user", data);
           this.showPromoteUserAdminBtn();//hide window to create to promote user as admin
           if (data.login == true){
             //successful, send message here to show somewhere, I got user for in case I need
@@ -149,6 +186,7 @@ export class HomeComponent implements OnInit{
 
   fetchUsersChannel(channelId: number){
     console.log("at get fetchChannels, before request");
+    this.channelIdSelected = channelId;
     this.usersService.getUsersChannel(channelId).subscribe({
       next:
         (data: any)=>{

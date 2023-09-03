@@ -79,6 +79,9 @@ body {
 .groupsButton {
   background: none;
 }
+.userBtn {
+  background: gray;
+}
 
 .styleButton {
   margin-top: 30px;
@@ -86,8 +89,6 @@ body {
   background: #5dbdaa;
 }
 
-.groupSelectedClass {
- color: white;
-}
+
 
 

@@ -29,5 +29,9 @@ export class usersService {
   promoteUserToAdmin(user:any, promoteUserEmail: string, groupIdSelected:number){
     return this.http.post<User>('http://localhost:3000/api/promoteUserAsAdmin', {user: user, promoteUserEmail, groupIdSelected});
   }
+
+  removeUserChat(user:any, removeUserEmail: string){
+    return this.http.post<User>('http://localhost:3000/api/removeUserChat', {user: user, removeUserEmail});
+  }
   
 }

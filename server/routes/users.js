@@ -9,4 +9,6 @@ router.post('/getUsersChannel', users.getUsersChannel);
 
 router.post('/promoteUserAsAdmin', users.promoteUserAsAdmin);
 
+router.post('/removeUserChat', users.removeUserChat);
+
 module.exports = router;

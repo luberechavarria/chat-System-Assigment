@@ -4,7 +4,7 @@
     <h2 class="group-h2" >Groups</h2>
     <ul class="group-li" *ngFor="let group of groupsArray">
       <!-- <li><button class="groupsButton groupNotSelected" (click)="fetchChannels(group.id)">{{ group.name }}</button></li> -->
-      <li><button [ngClass]="{'groupSelectedClass': group.id === groupIdSelected}" class="groupsButton" (click)="fetchChannels(group.id)">{{ group.name }}</button></li>
+      <li><button [ngClass]="{'white': group.id === groupIdSelected}" class="groupsButton" (click)="fetchChannels(group.id)">{{ group.name }}</button></li>
 
     </ul>
 
@@ -33,12 +33,25 @@
     </ng-container>
     <button class="styleButton" (click)="showPromoteUserAdminBtn()" id="bt">Promote user Admin</button>
     <!-- Promote user to Admin end-->
+
+    <!-- Remove user chat start-->
+    <ng-container *ngIf="show2">
+      <form (submit)="removeChatUser($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Email user</label>
+          <input type="text" [(ngModel)]="removeUserEmail"  name="removeUserEmail" class="form-control" id="deleteChatUser"  placeholder="Email user">
+        </div>
+        <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showRemoveChatUser()" id="bt">Remove Chat User</button>
+  <!-- Remove user chat end-->
   </div>
 
   <div class="channel-list">
     <h2 class="channel-h2">Channels</h2>
     <ul class="channel-li" *ngFor="let channel of channelsArray">
-      <li><button class="groupsButton"(click)="fetchUsersChannel(channel.id)">{{ channel.name }}</button></li>
+      <li><button [ngClass]="{'white': channel.id === channelIdSelected}" class="groupsButton"(click)="fetchUsersChannel(channel.id)">{{ channel.name }}</button></li>
       <!-- Add more channels here -->
     </ul>
   </div>
@@ -46,7 +59,7 @@
   <div class="user-list">
     <h2 class="channel-group">users</h2>
     <ul *ngFor="let usersChannel of arrayUsersChannels">
-      <li>{{ usersChannel.username }}</li>
+      <li><button [ngClass]="{'white': usersChannel.id === userIdSelected}" class="userBtn">{{ usersChannel.username }}</button></li>
       <!-- Add more users here -->
     </ul>
   </div>

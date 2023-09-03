@@ -58,4 +58,19 @@ const promoteUserAsAdmin = (req, res) => {
   }
 }
 
-module.exports = { login, getUsersChannel, promoteUserAsAdmin };
+const removeUserChat = (req, res) => {
+  console.log("removeUserChat", req.body)
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
+
+
+  if ( req.body.user.roles.includes('superAdmin')){
+    //remove user chat when you know where is it going to be
+    res.send(userPromotedAsAdmin);
+  }else{
+    res.send('This user can not promote users to admin');
+  }
+}
+
+module.exports = { login, getUsersChannel, promoteUserAsAdmin, removeUserChat };
