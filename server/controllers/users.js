@@ -58,19 +58,34 @@ const promoteUserAsAdmin = (req, res) => {
   }
 }
 
-const removeUserChat = (req, res) => {
-  console.log("removeUserChat", req.body)
+const removeUser = (req, res) => {
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
+
+  if ( req.body.user.roles.includes('superAdmin')){
+    const userWasRemoved = userService.removeUser(req.body.removeUserEmail);
+    console.log("user was removed", userWasRemoved)
+    res.send(userWasRemoved);
+  }else{
+    res.send('This user can not promote users to admin');
+  }
+}
+
+const createNewUser = (req, res) => {
+  console.log("createNewUser", req.body)
   if (!req.body) {
     return res.sendStatus(400);
   }
 
 
   if ( req.body.user.roles.includes('superAdmin')){
-    //remove user chat when you know where is it going to be
-    res.send(userPromotedAsAdmin);
+    const newUser = userService.createNewUser(req.body.createNewUserEmail, req.body.password, req.body.username);
+    console.log("new user server", newUser)
+    res.send(newUser);
   }else{
     res.send('This user can not promote users to admin');
   }
 }
 
-module.exports = { login, getUsersChannel, promoteUserAsAdmin, removeUserChat };
+module.exports = { login, getUsersChannel, promoteUserAsAdmin, removeUser, createNewUser };

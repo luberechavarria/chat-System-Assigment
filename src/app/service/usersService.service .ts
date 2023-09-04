@@ -30,8 +30,12 @@ export class usersService {
     return this.http.post<User>('http://localhost:3000/api/promoteUserAsAdmin', {user: user, promoteUserEmail, groupIdSelected});
   }
 
-  removeUserChat(user:any, removeUserEmail: string){
-    return this.http.post<User>('http://localhost:3000/api/removeUserChat', {user: user, removeUserEmail});
+  removeUser(user:any, removeUserEmail: string){
+    return this.http.post<User>('http://localhost:3000/api/removeUser', {user: user, removeUserEmail});
+  }
+
+  createNewUser(user:any, createNewUserEmail: string, password:string, username:string){
+    return this.http.post<User>('http://localhost:3000/api/createNewUser', {user: user, createNewUserEmail, password, username});
   }
   
 }

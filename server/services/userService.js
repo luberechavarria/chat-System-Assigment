@@ -1,7 +1,7 @@
 let users = [
-  {'id': 1, 'username':'luber SuperAdmin', 'email': '1@gmail.com', 'pwd': '123', 'roles': ['superAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
-  {'id': 2, 'username':'luber GroupAdmin', 'email': '2@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
-  {'id': 3, 'username':'luber User', 'email': '3@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  {'id': 1, 'username':'luber Alexander', 'email': '1@gmail.com', 'pwd': '123', 'roles': ['superAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  {'id': 2, 'username':'Marcela Cuellar', 'email': '2@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': [2, 4]}, 'user'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  {'id': 3, 'username':'Sarai Echavarria', 'email': '3@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
   {'id': 4, 'username':'Alex', 'email': 'Alex@gmail.com', 'pwd': '124', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
   {'id': 5, 'username':'Juan', 'email': 'Juan@gmail.com', 'pwd': '125', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
   {'id': 6, 'username':'Roberto', 'email': 'Roberto@gmail.com', 'pwd': '126', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
@@ -61,10 +61,24 @@ function promoteUserAsAdmin (promoteUserEmail, groupIdSelected) {
        user =  users[e];
     }
   }
-
+  
   return user
 }
 
+function removeUser (userToRemove) {
+  users = users.filter(function(item) {
+    return item.email !== userToRemove
+  })
+ 
+  return users;
+}
+
+function createNewUser (newUserEmail, password, username) {
+  users.push({'id': users.length + 1, 'username': username, 'email': newUserEmail, 'pwd': password, 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''});
+ 
+  return users;
+}
+
 module.exports = {
-  getUsers, login, promoteUserAsAdmin
+  getUsers, login, promoteUserAsAdmin, removeUser, createNewUser
 };

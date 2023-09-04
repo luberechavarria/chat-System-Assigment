@@ -45,12 +45,18 @@ export class HomeComponent implements OnInit{
   public buttonName1:string = 'show1';
 
   public show2:boolean = false;
-  public buttonName2:string = 'show';
+  public buttonName2:string = 'show2';
+
+  public show3:boolean = false;
+  public buttonName3:string = 'show3';
 
   promoteUserAsAdmin:string = '';
 
   removeUserEmail:string = '';
   
+  createNewUserEmail:string = '';
+  password:string = '';
+  username:string = '';
   
   private router = inject(Router)
   private GroupsService = inject(GroupsService);
@@ -84,14 +90,24 @@ export class HomeComponent implements OnInit{
   }
 
    // hide and show window showRemoveChatUser.
-   showRemoveChatUser() {
+   showRemoveUser() {
     this.show2 = !this.show2;
     if(this.show2){  
-      this.buttonName2 = "Hide1";
+      this.buttonName2 = "Hide2";
     }else{
-      this.buttonName2 = "Show1";
+      this.buttonName2 = "Show2";
     }
   }
+
+    // hide and show window create new user.
+    showCreateNewUserBtn() {
+      this.show3 = !this.show3;
+      if(this.show3){  
+        this.buttonName3 = "Hide3";
+      }else{
+        this.buttonName3 = "Show3";
+      }
+    }
 
  
 
@@ -118,7 +134,8 @@ export class HomeComponent implements OnInit{
       next:
         (data: any)=>{
           this.showPromoteUserAdminBtn();//hide window to create to promote user as admin
-          if (data.login == true){
+          if (data){
+            console.log("promoteUserToAdmin", data)
             //successful, send message here to show somewhere, I got user for in case I need
           } else {
             this.errormsg = "Invalid data format";
@@ -130,15 +147,13 @@ export class HomeComponent implements OnInit{
     })
   }
 
-  removeChatUser(event:any){
-    // I have not set yet what t send for server here an dhow highlight users
-    // this.userIdSelected = this.removeUserEmail;
-    this.usersService.removeUserChat(this.currentuser, this.removeUserEmail).subscribe({
+  removeUser(event:any){
+    this.usersService.removeUser(this.currentuser, this.removeUserEmail).subscribe({
       next:
         (data: any)=>{
-          console.log(" removeUserChat user", data);
-          this.showPromoteUserAdminBtn();//hide window to create to promote user as admin
+          this.showRemoveUser();
           if (data.login == true){
+            console.log(" removeUser user", data);
             //successful, send message here to show somewhere, I got user for in case I need
           } else {
             this.errormsg = "Invalid data format";
@@ -146,6 +161,24 @@ export class HomeComponent implements OnInit{
       
       error:
         this.errormsg = "There is a problem promoting this user to admin";
+      }
+    })
+  }
+  
+  createNewUser(event:any){
+    this.usersService.createNewUser(this.currentuser, this.createNewUserEmail, this.password, this.username).subscribe({
+      next:
+        (data: any)=>{
+          this.showCreateNewUserBtn();
+          if (data){
+            console.log(" createNewUser user", data);
+            //successful, send message here to show somewhere, I got user for in case I need
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem creating new User";
       }
     })
   }

@@ -36,7 +36,7 @@
 
     <!-- Remove user chat start-->
     <ng-container *ngIf="show2">
-      <form (submit)="removeChatUser($event)">
+      <form (submit)="removeUser($event)">
         <div class="form-group">
           <label class="white" for="exampleInputEmail1">Email user</label>
           <input type="text" [(ngModel)]="removeUserEmail"  name="removeUserEmail" class="form-control" id="deleteChatUser"  placeholder="Email user">
@@ -44,8 +44,24 @@
         <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
       </form>
     </ng-container>
-    <button class="styleButton" (click)="showRemoveChatUser()" id="bt">Remove Chat User</button>
-  <!-- Remove user chat end-->
+    <button class="styleButton" (click)="showRemoveUser()" id="bt">Remove User</button>
+    <!-- Remove user chat end-->
+
+     <!-- Create new user start-->
+     <ng-container *ngIf="show3">
+      <form (submit)="createNewUser($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Email user</label>
+          <input type="text" [(ngModel)]="createNewUserEmail"  name="createNewUserEmail" class="form-control" id="createNewUser"  placeholder="Email user">
+          <input type="text" [(ngModel)]="username"  name="username" class="form-control spaceTop" id="createNewUser"  placeholder="username">
+          <input type="text" [(ngModel)]="password"  name="password" class="form-control spaceTop" id="createNewUser"  placeholder="password">
+
+        </div>
+        <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showCreateNewUserBtn()" id="bt">Create new User</button>
+    <!-- Create new user chat end-->
   </div>
 
   <div class="channel-list">
