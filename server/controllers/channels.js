@@ -30,15 +30,6 @@ const addChannelToGroup = (req, res) => {
   }else{
     res.send('This user can not add chanel to group');
   }
-  // const arrayChannels = [];
-
-  // for (let i=0; i<channels.length; i++){
-  //  if (req.body.groupId == channels[i].group) {// if groupId match group in channel, bring that channel
-  //   arrayChannels.push(channels[i])
-  //  }
-  // };
-
-  
 }
 
 module.exports = {getChannels, addChannelToGroup};

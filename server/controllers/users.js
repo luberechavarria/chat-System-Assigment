@@ -24,11 +24,11 @@ const login = (req, res) => {
 
 const getUsersChannel = (req, res) => {
 
-  const channels = channelService.getChannels(); // Call the getChannels function from the userService module
-
   if (!req.body) {
     return res.sendStatus(400);
   }
+
+  const channels = channelService.getAllChannels(); // Call the getChannels function from the userService module
 
   let channelClicked;
   

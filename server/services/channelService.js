@@ -21,6 +21,11 @@ function getChannels(groupId) {
   return arrayChannels;
 }
 
+function getAllChannels() {
+  
+  return channels;
+}
+
 function addChannelToGroup(groupId, newChannelName) {
  
   channels.push({'id': channels.length, 'name': newChannelName, 'group': groupId, 'usersIdChannel':[]});
@@ -29,5 +34,5 @@ function addChannelToGroup(groupId, newChannelName) {
 }
 
 module.exports = {
-  getChannels, addChannelToGroup
+  getChannels, addChannelToGroup, getAllChannels
 };
