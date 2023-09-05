@@ -81,11 +81,13 @@ const createNewUser = (req, res) => {
 
   if ( req.body.user.roles.includes('superAdmin')){
     const newUser = userService.createNewUser(req.body.createNewUserEmail, req.body.password, req.body.username);
-    console.log("new user server", newUser)
+    
     res.send(newUser);
   }else{
     res.send('This user can not promote users to admin');
   }
 }
+
+
 
 module.exports = { login, getUsersChannel, promoteUserAsAdmin, removeUser, createNewUser };

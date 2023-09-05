@@ -50,6 +50,15 @@ export class HomeComponent implements OnInit{
   public show3:boolean = false;
   public buttonName3:string = 'show3';
 
+  public show4:boolean = false;
+  public buttonName4:string = 'show4';
+
+  public show5:boolean = false;
+  public buttonName5:string = 'show5';
+
+  public show6:boolean = false;
+  public buttonName6:string = 'show6';
+
   promoteUserAsAdmin:string = '';
 
   removeUserEmail:string = '';
@@ -57,6 +66,14 @@ export class HomeComponent implements OnInit{
   createNewUserEmail:string = '';
   password:string = '';
   username:string = '';
+
+  userAddToGroupEmail:string = '';
+  groupname:string = '';
+
+  newChannelName:string = '';
+  
+  removeGroupName:string = '';
+  
   
   private router = inject(Router)
   private GroupsService = inject(GroupsService);
@@ -99,21 +116,51 @@ export class HomeComponent implements OnInit{
     }
   }
 
-    // hide and show window create new user.
-    showCreateNewUserBtn() {
-      this.show3 = !this.show3;
-      if(this.show3){  
-        this.buttonName3 = "Hide3";
-      }else{
-        this.buttonName3 = "Show3";
-      }
+  // hide and show window create new user.
+  showCreateNewUserBtn() {
+    this.show3 = !this.show3;
+    if(this.show3){  
+      this.buttonName3 = "Hide3";
+    }else{
+      this.buttonName3 = "Show3";
     }
+  }
+
+  // hide and show window add existing user to group.
+  showAddUserToGroupBtn() {
+    this.show4 = !this.show4;
+    if(this.show4){  
+      this.buttonName4 = "Hide4";
+    }else{
+      this.buttonName4 = "Show4";
+    }
+  }
+
+  // hide and show window add channel to group.
+  showAddChannelToGroupBtn() {
+    this.show5 = !this.show5;
+    if(this.show5){  
+      this.buttonName5 = "Hide5";
+    }else{
+      this.buttonName5 = "Show5";
+    }
+  }
+
+  // hide and show window remove group.
+  showRemoveGroup() {
+    this.show6 = !this.show6;
+    if(this.show6){  
+      this.buttonName6 = "Hide6";
+    }else{
+      this.buttonName6 = "Show6";
+    }
+  }
 
  
 
   createGroup(event:any){
     event.preventDefault();
-    this.GroupsService.createGroup(this.currentuser, this.newGroupName).subscribe({
+    this.GroupsService.createGroup(this.currentuser, this.removeGroupName).subscribe({
       next:
         (data: any)=>{
           this.showCreateGroupBtn();//hide window to create groups
@@ -164,6 +211,24 @@ export class HomeComponent implements OnInit{
       }
     })
   }
+
+  removeGroup(event:any){
+    this.GroupsService.removeGroup(this.currentuser, this.removeGroupName).subscribe({
+      next:
+        (data: any)=>{
+          this.showRemoveGroup();
+          if (data){
+            console.log(" removeGroup", data);
+            //successful, send message here to show somewhere, I got user for in case I need
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem removing goup";
+      }
+    })
+  }
   
   createNewUser(event:any){
     this.usersService.createNewUser(this.currentuser, this.createNewUserEmail, this.password, this.username).subscribe({
@@ -179,6 +244,43 @@ export class HomeComponent implements OnInit{
       
       error:
         this.errormsg = "There is a problem creating new User";
+      }
+    })
+  }
+
+
+  addExistedUserToGroup(event:any){
+    this.GroupsService.addExistedUserToGroup(this.currentuser, this.userAddToGroupEmail, this.groupname).subscribe({
+      next:
+        (data: any)=>{
+          this.showAddUserToGroupBtn();
+          if (data){
+            console.log(" addExistedUserToGroupr", data);
+            //successful, send message here to show somewhere
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem to add user to group";
+      }
+    })
+  }
+
+  addChannelToGroup(event:any){
+    this.ChannelsService.addChannelToGroup(this.currentuser, this.groupIdSelected, this.newChannelName).subscribe({
+      next:
+        (data: any)=>{
+          this.showAddChannelToGroupBtn();
+          if (data){
+            console.log(" addChannelToGroup", data);
+            //successful, send message here to show somewhere
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem to add channel to group";
       }
     })
   }

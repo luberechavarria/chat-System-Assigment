@@ -1,8 +1,8 @@
 let groups = [
-  {'id': 1, 'name': 'cinema'},
-  {'id': 2, 'name': 'languages'},
-  {'id': 3, 'name': 'technology'},
-  {'id': 4, 'name': 'brisbane'},
+  {'id': 1, 'name': 'cinema', 'usersIdGroup':[]},
+  {'id': 2, 'name': 'languages', 'usersIdGroup':[1, 2, 4, 5]},
+  {'id': 3, 'name': 'technology', 'usersIdGroup':[1, 2, 3]},
+  {'id': 4, 'name': 'brisbane', 'usersIdGroup':[4, 5]},
 ]
 
 function getGroups(role, groupsId) {
@@ -36,17 +36,36 @@ function getGroups(role, groupsId) {
     
     return groupsUser;
   }
-
-
-
-  
 }
 
 function createGroup(newGroupName) {
-  groups.push({'id': groups.length + 1, 'name': newGroupName})
+  groups.push({'id': groups.length + 1, 'name': newGroupName, 'usersIdGroup':[]})
 
   return groups;
 }
 
-module.exports = { getGroups, createGroup };
+function addExistedUserToGroup (userId, groupname) {
+  let success = false;
+  for (let e=0; e<groups.length; e++){
+    console.log("groups[i].name", groups[e].name);
+    console.log("groupname", groupname);
+    if( groups[e].name == groupname){
+      groups[e].usersIdGroup.push(userId);
+      success = true;
+    }
+  }
+  
+  return success;
+}
+
+function removeGroup (groupname) {
+  groups = groups.filter(function(item) {
+ 
+    return item.name !== groupname
+  })
+ 
+  return groups;
+}
+
+module.exports = { getGroups, createGroup, addExistedUserToGroup, removeGroup };
   

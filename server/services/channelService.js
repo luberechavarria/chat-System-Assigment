@@ -9,10 +9,25 @@ let channels = [
   {'id': 8, 'name': 'houses', 'group': 4, 'usersIdChannel':[4]},
 ]
 
-function getChannels() {
-  return channels;
+function getChannels(groupId) {
+  const arrayChannels = [];
+
+  for (let i=0; i<channels.length; i++){
+   if (channels[i].group == groupId) {// if groupId match group in channel, bring that channel
+    arrayChannels.push(channels[i])
+   }
+  };
+
+  return arrayChannels;
+}
+
+function addChannelToGroup(groupId, newChannelName) {
+ 
+  channels.push({'id': channels.length, 'name': newChannelName, 'group': groupId, 'usersIdChannel':[]});
+  
+  return true;
 }
 
 module.exports = {
-  getChannels,
+  getChannels, addChannelToGroup
 };

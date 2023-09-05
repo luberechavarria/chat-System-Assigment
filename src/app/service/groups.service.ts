@@ -30,5 +30,12 @@ export class GroupsService {
     return this.http.post<Groups>('http://localhost:3000/api/createGroup', {user: user, newGroupName: newGroupName});
   }
   
+  addExistedUserToGroup(user:any, userAddToGroupEmail: string, groupname:string){
+    return this.http.post<User>('http://localhost:3000/api/addExistedUserToGroup', {user: user, userAddToGroupEmail, groupname});
+  }
+
+  removeGroup(user:any, groupname:string){
+    return this.http.post<User>('http://localhost:3000/api/removeGroup', {user: user, groupname});
+  }
 
 }

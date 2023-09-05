@@ -37,5 +37,6 @@ export class usersService {
   createNewUser(user:any, createNewUserEmail: string, password:string, username:string){
     return this.http.post<User>('http://localhost:3000/api/createNewUser', {user: user, createNewUserEmail, password, username});
   }
+
   
 }

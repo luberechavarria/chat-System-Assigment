@@ -12,10 +12,10 @@
     <ng-container *ngIf="show">
       <form (submit)="createGroup($event)">
         <div class="form-group">
-          <label class="white" for="exampleInputEmail1">New group name</label>
+          <label class="white" for="exampleInputEmail1">Create group</label>
           <input type="text" [(ngModel)]="newGroupName" name="newGroupName" class="form-control" id="createNewGroupId"  placeholder="Enter name">
         </div>
-        <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
       </form>
     </ng-container>
     <button class="styleButton" (click)="showCreateGroupBtn()" id="bt">Create group</button>
@@ -25,23 +25,23 @@
     <ng-container *ngIf="show1">
       <form (submit)="promoteUserToAdmin($event)">
         <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Email user</label>
+          <label class="white" for="exampleInputEmail1">promote User To Admin</label>
           <input type="text" [(ngModel)]="promoteUserAsAdmin"  name="promoteUserAsAdmin" class="form-control" id="promoteUserAsAdmin"  placeholder="Email user">
         </div>
-        <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
       </form>
     </ng-container>
-    <button class="styleButton" (click)="showPromoteUserAdminBtn()" id="bt">Promote user Admin</button>
+    <button class="styleButton" (click)="showPromoteUserAdminBtn()" id="bt">Promote user to  Admin</button>
     <!-- Promote user to Admin end-->
 
     <!-- Remove user chat start-->
     <ng-container *ngIf="show2">
       <form (submit)="removeUser($event)">
         <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Email user</label>
+          <label class="white" for="exampleInputEmail1">remove User</label>
           <input type="text" [(ngModel)]="removeUserEmail"  name="removeUserEmail" class="form-control" id="deleteChatUser"  placeholder="Email user">
         </div>
-        <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
       </form>
     </ng-container>
     <button class="styleButton" (click)="showRemoveUser()" id="bt">Remove User</button>
@@ -51,17 +51,57 @@
      <ng-container *ngIf="show3">
       <form (submit)="createNewUser($event)">
         <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Email user</label>
+          <label class="white" for="exampleInputEmail1">Create new user</label>
           <input type="text" [(ngModel)]="createNewUserEmail"  name="createNewUserEmail" class="form-control" id="createNewUser"  placeholder="Email user">
           <input type="text" [(ngModel)]="username"  name="username" class="form-control spaceTop" id="createNewUser"  placeholder="username">
           <input type="text" [(ngModel)]="password"  name="password" class="form-control spaceTop" id="createNewUser"  placeholder="password">
 
         </div>
-        <button type="submit" class="btn btn-primary newGroupSubmitBtn">Submit</button>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
       </form>
     </ng-container>
     <button class="styleButton" (click)="showCreateNewUserBtn()" id="bt">Create new User</button>
     <!-- Create new user chat end-->
+
+    <!-- AddExistedUserToGroup start-->
+    <ng-container *ngIf="show4">
+      <form (submit)="addExistedUserToGroup($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Add user to Group</label>
+          <input type="text" [(ngModel)]="userAddToGroupEmail"  name="userAddToGroupEmail" class="form-control spaceTop" id="userAddToGroupEmail"  placeholder="Email user">
+          <input type="text" [(ngModel)]="groupname"  name="groupname" class="form-control spaceTop" id="groupname"  placeholder="groupname">
+        </div>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showAddUserToGroupBtn()" id="bt">Add user to Group</button>
+    <!-- AddExistedUserToGroup end-->
+
+    <!-- addChannelToGroup start-->
+    <ng-container *ngIf="show5">
+      <form (submit)="addChannelToGroup($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Add user to Group</label>
+          <input type="text" [(ngModel)]="newChannelName"  name="newChannelName" class="form-control spaceTop" id="addChannelToGroup"  placeholder="New channel name">
+        </div>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showAddChannelToGroupBtn()" id="bt">Add channel to Group</button>
+    <!-- addChannelToGroup end-->
+
+    <!-- removeGroup start-->
+    <ng-container *ngIf="show6">
+      <form (submit)="removeGroup($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Remove group</label>
+          <input type="text" [(ngModel)]="removeGroupName"  name="removeGroupName" class="form-control" id="removeGroup"  placeholder="Remove group name">
+        </div>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showRemoveGroup()" id="bt">Remove Group</button>
+    <!-- removeGroup end-->
   </div>
 
   <div class="channel-list">

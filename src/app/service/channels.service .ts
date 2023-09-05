@@ -26,4 +26,7 @@ export class ChannelsService {
     return this.http.post<Channels>('http://localhost:3000/api/getChannels', {groupId: groupId});
   }
   
+  addChannelToGroup(user:any, groupId:number, newChannelName: string){
+    return this.http.post<User>('http://localhost:3000/api/addChannelToGroup', {user: user, groupId, newChannelName});
+  }
 }
