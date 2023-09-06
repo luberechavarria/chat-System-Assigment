@@ -28,7 +28,7 @@ const getGroups = (req, res) => {
 }
 
 const createGroup = (req, res) => {
-  // console.log("getting server top getGroups", req.body)
+  console.log("getting server top createGroup", req.body)
   if (!req.body) {
     return res.sendStatus(400);
   }
@@ -73,9 +73,9 @@ const removeGroup = (req, res) => {
   }
 
   if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
-    const groupWasRemoved = groupService.removeGroup(req.body.groupname);
+    const updatedGroups = groupService.removeGroup(req.body.groupname);
   
-    res.send({status: 200, message: 'Group was successful removed'});
+    res.send(updatedGroups);
   }else{
     res.send('This user can not promote users to admin');
   }

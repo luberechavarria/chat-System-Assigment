@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit{
   channelIdSelected = 0; // Keep highLight the channelIdSelected selected
   userIdSelected = 0; // Keep highLight the userIdSelected selected
 
+  groups:Groups[] = [];
 
   errormsg = "";
   currentuser:any = new User();
@@ -190,7 +191,7 @@ export class HomeComponent implements OnInit{
 
   createGroup(event:any){
     event.preventDefault();
-    this.GroupsService.createGroup(this.currentuser, this.removeGroupName).subscribe({
+    this.GroupsService.createGroup(this.currentuser, this.newGroupName).subscribe({
       next:
         (data: any)=>{
           this.showCreateGroupBtn();//hide window to create groups
@@ -249,7 +250,7 @@ export class HomeComponent implements OnInit{
           this.showRemoveGroup();
           if (data){
             console.log(" removeGroup", data);
-            //successful, send message here to show somewhere, I got user for in case I need
+            this.groupsArray = data.map((groupData: any) => new Groups(groupData.id, groupData.name));
           } else {
             this.errormsg = "Invalid data format";
           }
@@ -285,7 +286,7 @@ export class HomeComponent implements OnInit{
           this.showRemoveUserFromChannel();
           if (data){
             console.log(" removeUserFromChannel", data);
-            //successful, send message here to show somewhere, I got user for in case I need
+            this.arrayUsersChannels = data.map((usersChannelData: any) => new User(usersChannelData.id, usersChannelData.username));
           } else {
             this.errormsg = "Invalid data format";
           }
@@ -340,7 +341,7 @@ export class HomeComponent implements OnInit{
           this.showAddChannelToGroupBtn();
           if (data){
             console.log(" addChannelToGroup", data);
-            //successful, send message here to show somewhere
+            this.channelsArray = data.map((channelData: any) => new Channels(channelData.id, channelData.name));
           } else {
             this.errormsg = "Invalid data format";
           }

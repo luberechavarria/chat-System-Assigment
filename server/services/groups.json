@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "cinema",
+    "usersIdGroup": [
+      4,
+      6,
+      2
+    ]
+  },
+  {
+    "id": 2,
+    "name": "languages",
+    "usersIdGroup": [
+      1,
+      2,
+      4,
+      5
+    ]
+  },
+  {
+    "id": 3,
+    "name": "technology",
+    "usersIdGroup": [
+      1,
+      2,
+      3
+    ]
+  }
+]

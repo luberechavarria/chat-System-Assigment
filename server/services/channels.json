@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "name": "movies",
+    "group": 1,
+    "usersIdChannel": [
+      2,
+      4,
+      5,
+      3
+    ]
+  },
+  {
+    "id": 2,
+    "name": "reviews",
+    "group": 1,
+    "usersIdChannel": [
+      1,
+      4
+    ]
+  },
+  {
+    "id": 3,
+    "name": "transformers",
+    "group": 1,
+    "usersIdChannel": [
+      1,
+      3
+    ]
+  },
+  {
+    "id": 4,
+    "name": "spanish",
+    "group": 2,
+    "usersIdChannel": [
+      2,
+      5
+    ]
+  },
+  {
+    "id": 5,
+    "name": "english",
+    "group": 2,
+    "usersIdChannel": [
+      2
+    ]
+  },
+  {
+    "id": 6,
+    "name": "italian",
+    "group": 2,
+    "usersIdChannel": [
+      2
+    ]
+  },
+  {
+    "id": 7,
+    "name": "computers",
+    "group": 3,
+    "usersIdChannel": [
+      3
+    ]
+  },
+  {
+    "id": 8,
+    "name": "houses",
+    "group": 4,
+    "usersIdChannel": [
+      4
+    ]
+  },
+  {
+    "id": 8,
+    "name": "celos",
+    "group": 1,
+    "usersIdChannel": []
+  },
+  {
+    "id": 9,
+    "name": "foodMovie",
+    "group": 1,
+    "usersIdChannel": []
+  },
+  {
+    "id": 10,
+    "name": "go",
+    "group": 1,
+    "usersIdChannel": []
+  }
+]

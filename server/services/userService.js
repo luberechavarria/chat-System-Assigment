@@ -1,16 +1,47 @@
-let users = [
-  {'id': 1, 'username':'luber Alexander', 'email': '1@gmail.com', 'pwd': '123', 'roles': ['superAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
-  {'id': 2, 'username':'Marcela Cuellar', 'email': '2@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': [2, 4]}, 'groupAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
-  {'id': 3, 'username':'Sarai Echavarria', 'email': '3@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
-  {'id': 4, 'username':'Alex', 'email': 'Alex@gmail.com', 'pwd': '124', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
-  {'id': 5, 'username':'Juan', 'email': 'Juan@gmail.com', 'pwd': '125', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
-  {'id': 6, 'username':'Roberto', 'email': 'Roberto@gmail.com', 'pwd': '126', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
-  {'id': 7, 'username':'Eliza', 'email': 'Eliza@gmail.com', 'pwd': '127', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
-]
+var fs = require('fs');
 
+let users = [
+  // {'id': 1, 'username':'luber Alexander', 'email': '1@gmail.com', 'pwd': '123', 'roles': ['superAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  // {'id': 2, 'username':'Marcela Cuellar', 'email': '2@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': [2, 4]}, 'groupAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  // {'id': 3, 'username':'Sarai Echavarria', 'email': '3@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  // {'id': 4, 'username':'Alex', 'email': 'Alex@gmail.com', 'pwd': '124', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
+  // {'id': 5, 'username':'Juan', 'email': 'Juan@gmail.com', 'pwd': '125', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
+  // {'id': 6, 'username':'Roberto', 'email': 'Roberto@gmail.com', 'pwd': '126', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
+  // {'id': 7, 'username':'Eliza', 'email': 'Eliza@gmail.com', 'pwd': '127', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
+]
+ 
+function updateGroupsJSON(usersUpDate) {
+  // Convert the 'users' array to JSON format
+  const groupsJson = JSON.stringify(usersUpDate, null, 2);
+  fs.writeFile('server/services/users.json', groupsJson, function(err) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('Write operation complete.');
+    }
+  });
+}
+
+fs.readFile('server/services/users.json', 'utf8', (err, data) => {
+  if (err) {
+    console.error(`Error reading the file: ${err}`);
+    return;
+  }
+
+  try {
+    // Parse the JSON data into a JavaScript object
+    const groupsJSON = JSON.parse(data);
+
+    users = groupsJSON; // Assign the parsed data to 'users'
+  } catch (error) {
+    console.error(`Error parsing JSON data: ${error}`);
+  }
+});
+  
 function getUsers(findUsersId, byProperty) {
   // Return all users
   if(findUsersId == 'all'){
+    
     return users;
   }
   
@@ -22,7 +53,7 @@ function getUsers(findUsersId, byProperty) {
       }
     };
     
-
+    
     return usersFound[0];
   }
 
@@ -60,6 +91,7 @@ function promoteUserAsAdmin (promoteUserEmail, groupIdSelected) {
     }
   }
   
+  updateGroupsJSON(users);
   return user
 }
 

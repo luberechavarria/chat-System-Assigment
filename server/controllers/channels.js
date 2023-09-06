@@ -23,10 +23,10 @@ const addChannelToGroup = (req, res) => {
 
  
   if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
-    const success = channelService.addChannelToGroup(req.body.groupId, req.body.newChannelName);  
+    const channels = channelService.addChannelToGroup(req.body.groupId, req.body.newChannelName);  
 
-    if(success){
-      res.send({status: 200, message: 'Channel was successful added to Group'});
+    if(channels){
+      res.send(channels);
     } 
   }else{
     res.send('This user can not add chanel to group');
@@ -42,9 +42,11 @@ const removeUserFromChannel = (req, res) => {
   if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
     const user = userService.getUsers(req.body.removeUserInChannelEmail, 'email'); //search user by 'email'
     if(user){
-      const userRemoved = channelService.removeUserFromChannel(req.body.channelIdSelected, user.id);
-      if(userRemoved){
-        res.send({status: 200, message: 'User was remove from channel'});
+      const channelUpdate = channelService.removeUserFromChannel(req.body.channelIdSelected, user.id);
+      if(channelUpdate){
+        
+        let userChannel = userService.getUsers(channelUpdate.usersIdChannel, 'id');//bring all user from the channel based in this array
+        res.send(userChannel); // return channel with the user removed 
       }else{
         res.send({status: 404, message: 'User could not be removed from channel'});
       }
