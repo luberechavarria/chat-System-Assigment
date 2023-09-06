@@ -38,4 +38,8 @@ export class GroupsService {
     return this.http.post<User>('http://localhost:3000/api/removeGroup', {user: user, groupname});
   }
 
+  removeUserFromGroup(user:any, removeUserInGroupEmail:string, groupIdSelected:number){
+    return this.http.post<User>('http://localhost:3000/api/removeUserFromGroup', {user: user, removeUserInGroupEmail, groupIdSelected});
+  }
+
 }

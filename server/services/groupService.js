@@ -1,5 +1,5 @@
 let groups = [
-  {'id': 1, 'name': 'cinema', 'usersIdGroup':[]},
+  {'id': 1, 'name': 'cinema', 'usersIdGroup':[2, 4, 6]},
   {'id': 2, 'name': 'languages', 'usersIdGroup':[1, 2, 4, 5]},
   {'id': 3, 'name': 'technology', 'usersIdGroup':[1, 2, 3]},
   {'id': 4, 'name': 'brisbane', 'usersIdGroup':[4, 5]},
@@ -67,5 +67,28 @@ function removeGroup (groupname) {
   return groups;
 }
 
-module.exports = { getGroups, createGroup, addExistedUserToGroup, removeGroup };
+function removeUserFromGroup (groupId, userId) {
+  let groupSelected;
+  for (let i=0; i<groups.length; i++){
+    if (groups[i].id == groupId ) {
+      groupSelected = groups[i];
+    }
+  };
+   
+  let groupUsersIds = groupSelected.usersIdGroup;
+   
+  let index = groupUsersIds.indexOf(userId);
+  if (index > -1) {
+    groupUsersIds.splice(index, 1);
+  }
+
+  //find group selected in array to repace it with the new group which has the user deleted
+  const index1 = groups.findIndex(item => item.id === groupId);
+  
+  groups.splice(index1, 1, groupSelected);
+  
+  return true;
+}
+
+module.exports = { getGroups, createGroup, addExistedUserToGroup, removeGroup, removeUserFromGroup};
   

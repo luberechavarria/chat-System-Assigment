@@ -81,5 +81,31 @@ const removeGroup = (req, res) => {
   }
 }
 
+const removeUserFromGroup = (req, res) => {
+  // console.log("removeUserFromGroup", req.body)
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
+  
+  if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
+    const user = userService.getUsers(req.body.removeUserInGroupEmail, 'email'); //search user by 'email'
+    if(user){
+      const userRemoved = groupService.removeUserFromGroup(req.body.groupIdSelected, user.id);
+      if(userRemoved){
+        res.send({status: 200, message: 'User was remove from group'});
+      }else{
+        res.send({status: 404, message: 'User could not be removed from group'});
+      }
+      
+    }else{
+      res.send({status: 404, message: 'User was not found'});
+    }
 
-module.exports = {getGroups, createGroup, addExistedUserToGroup, removeGroup};
+    
+  }else{
+    res.send('This user can not promote users to admin');
+  }
+}
+
+
+module.exports = {getGroups, createGroup, addExistedUserToGroup, removeGroup, removeUserFromGroup};

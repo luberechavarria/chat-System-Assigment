@@ -29,4 +29,9 @@ export class ChannelsService {
   addChannelToGroup(user:any, groupId:number, newChannelName: string){
     return this.http.post<User>('http://localhost:3000/api/addChannelToGroup', {user: user, groupId, newChannelName});
   }
+
+  removeUserFromChannel(user:any, removeUserInChannelEmail:string, channelIdSelected:number){
+    return this.http.post<User>('http://localhost:3000/api/removeUserFromChannel', {user: user, removeUserInChannelEmail, channelIdSelected});
+  }
+ 
 }

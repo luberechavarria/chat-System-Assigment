@@ -77,18 +77,7 @@
     <button class="styleButton" (click)="showAddUserToGroupBtn()" id="bt">Add user to Group</button>
     <!-- AddExistedUserToGroup end-->
 
-    <!-- addChannelToGroup start-->
-    <ng-container *ngIf="show5">
-      <form (submit)="addChannelToGroup($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Add user to Group</label>
-          <input type="text" [(ngModel)]="newChannelName"  name="newChannelName" class="form-control spaceTop" id="addChannelToGroup"  placeholder="New channel name">
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showAddChannelToGroupBtn()" id="bt">Add channel to Group</button>
-    <!-- addChannelToGroup end-->
+ 
 
     <!-- removeGroup start-->
     <ng-container *ngIf="show6">
@@ -102,20 +91,60 @@
     </ng-container>
     <button class="styleButton" (click)="showRemoveGroup()" id="bt">Remove Group</button>
     <!-- removeGroup end-->
+
+    <!-- remove user from group start-->
+    <ng-container *ngIf="show7">
+      <form (submit)="removeUserFromGroup($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Remove user from group</label>
+          <input type="text" [(ngModel)]="removeUserInGroupEmail"  name="removeUserInGroupEmail" class="form-control" id="removeUserFromGroup"  placeholder="User Email">
+        </div>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showRemoveUserFromGroup()" id="bt">Remove user from Group</button>
+    <!-- remove user from group end-->
+
   </div>
 
   <div class="channel-list">
     <h2 class="channel-h2">Channels</h2>
     <ul class="channel-li" *ngFor="let channel of channelsArray">
-      <li><button [ngClass]="{'white': channel.id === channelIdSelected}" class="groupsButton"(click)="fetchUsersChannel(channel.id)">{{ channel.name }}</button></li>
+      <li><button [ngClass]="{'white': channel.id === channelIdSelected}" class="groupsButton" (click)="fetchUsersChannel(channel.id)">{{ channel.name }}</button></li>
       <!-- Add more channels here -->
     </ul>
+
+    <!-- addChannelToGroup start-->
+    <ng-container *ngIf="show5">
+      <form (submit)="addChannelToGroup($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Add user to Group</label>
+          <input type="text" [(ngModel)]="newChannelName"  name="newChannelName" class="form-control spaceTop" id="addChannelToGroup"  placeholder="New channel name">
+        </div>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showAddChannelToGroupBtn()" id="bt">Add channel to Group</button>
+    <!-- addChannelToGroup end-->
+
+    <!-- remove user from channel start-->
+    <ng-container *ngIf="show8">
+      <form (submit)="removeUserFromChannel($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Remove user from channel</label>
+          <input type="text" [(ngModel)]="removeUserInChannelEmail"  name="removeUserInChannelEmail" class="form-control" id="removeUserFromChannel"  placeholder="User Email">
+        </div>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showRemoveUserFromChannel()" id="bt">Remove user from Channel</button>
+    <!-- remove user from channel end-->
   </div>
 
   <div class="user-list">
     <h2 class="channel-group">users</h2>
     <ul *ngFor="let usersChannel of arrayUsersChannels">
-      <li><button [ngClass]="{'white': usersChannel.id === userIdSelected}" class="userBtn">{{ usersChannel.username }}</button></li>
+      <li><button [ngClass]="{'white': usersChannel.id === userIdSelected}" class="userBtn" (click)="highLightChannelUsers(usersChannel.id)">{{ usersChannel.username }}</button></li>
       <!-- Add more users here -->
     </ul>
   </div>

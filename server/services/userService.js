@@ -16,7 +16,6 @@ function getUsers(findUsersId, byProperty) {
   
   if(byProperty == 'email'){
     let usersFound = [];
-    console.log("lubeeeeeeeeeer", findUsersId);
     for (let e=0; e<users.length; e++){
       if( findUsersId == users[e].email){
         usersFound.push(users[e]);

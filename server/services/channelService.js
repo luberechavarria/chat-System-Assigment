@@ -33,6 +33,29 @@ function addChannelToGroup(groupId, newChannelName) {
   return true;
 }
 
+function removeUserFromChannel (channelId, userId) {
+  let channelSelected;
+  for (let i=0; i<channels.length; i++){
+    if (channels[i].id == channelId ) {
+      channelSelected = channels[i];
+    }
+  };
+   
+  let channelUsersIds = channelSelected.usersIdChannel;
+   
+  let index = channelUsersIds.indexOf(userId);
+  if (index > -1) {
+    channelUsersIds.splice(index, 1);
+  }
+
+  //find group selected in array to repace it with the new group which has the user deleted
+  const index1 = channels.findIndex(item => item.id === channelId);
+  
+  channels.splice(index1, 1, channelSelected);
+  
+  return true;
+}
+
 module.exports = {
-  getChannels, addChannelToGroup, getAllChannels
+  getChannels, addChannelToGroup, getAllChannels, removeUserFromChannel
 };

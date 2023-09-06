@@ -11,5 +11,7 @@ router.post('/addExistedUserToGroup', groups.addExistedUserToGroup);
 
 router.post('/removeGroup', groups.removeGroup);
 
+router.post('/removeUserFromGroup', groups.removeUserFromGroup);
+
 
 module.exports = router;

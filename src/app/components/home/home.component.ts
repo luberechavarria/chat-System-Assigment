@@ -59,6 +59,12 @@ export class HomeComponent implements OnInit{
   public show6:boolean = false;
   public buttonName6:string = 'show6';
 
+  public show7:boolean = false;
+  public buttonName7:string = 'show7';
+
+  public show8:boolean = false;
+  public buttonName8:string = 'show8';
+
   promoteUserAsAdmin:string = '';
 
   removeUserEmail:string = '';
@@ -73,6 +79,10 @@ export class HomeComponent implements OnInit{
   newChannelName:string = '';
   
   removeGroupName:string = '';
+
+  removeUserInGroupEmail:string = '';
+
+  removeUserInChannelEmail:string = '';
   
   
   private router = inject(Router)
@@ -156,6 +166,26 @@ export class HomeComponent implements OnInit{
     }
   }
 
+  // hide and show window remove user from group.
+  showRemoveUserFromGroup() {
+    this.show7 = !this.show7;
+    if(this.show7){  
+      this.buttonName7 = "Hide7";
+    }else{
+      this.buttonName7 = "Show7";
+    }
+  }
+
+  // hide and show window remove user from channel.
+  showRemoveUserFromChannel() {
+    this.show8 = !this.show8;
+    if(this.show8){  
+      this.buttonName8 = "Hide8";
+    }else{
+      this.buttonName8 = "Show8";
+    }
+  }
+
  
 
   createGroup(event:any){
@@ -225,7 +255,43 @@ export class HomeComponent implements OnInit{
           }
       
       error:
-        this.errormsg = "There is a problem removing goup";
+        this.errormsg = "There is a problem removing group";
+      }
+    })
+  }
+
+  removeUserFromGroup(event:any){
+    this.GroupsService.removeUserFromGroup(this.currentuser, this.removeUserInGroupEmail, this.groupIdSelected).subscribe({
+      next:
+        (data: any)=>{
+          this.showRemoveUserFromGroup();
+          if (data){
+            console.log(" removeUserFromGroup", data);
+            //successful, send message here to show somewhere, I got user for in case I need
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem removing user from group";
+      }
+    })
+  }
+
+  removeUserFromChannel(event:any){
+    this.ChannelsService.removeUserFromChannel(this.currentuser, this.removeUserInChannelEmail, this.channelIdSelected).subscribe({
+      next:
+        (data: any)=>{
+          this.showRemoveUserFromChannel();
+          if (data){
+            console.log(" removeUserFromChannel", data);
+            //successful, send message here to show somewhere, I got user for in case I need
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem removing user from channel";
       }
     })
   }
@@ -335,6 +401,10 @@ export class HomeComponent implements OnInit{
         this.errormsg = "There is a problem with the channels";
       }
     })
+  }
+
+  highLightChannelUsers(usersChannel: number){
+    this.userIdSelected = usersChannel;
   }
 
 }
