@@ -1,19 +1,19 @@
 var fs = require('fs');
 
 let users = [
-  // {'id': 1, 'username':'luber Alexander', 'email': '1@gmail.com', 'pwd': '123', 'roles': ['superAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
-  // {'id': 2, 'username':'Marcela Cuellar', 'email': '2@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': [2, 4]}, 'groupAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
-  // {'id': 3, 'username':'Sarai Echavarria', 'email': '3@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
-  // {'id': 4, 'username':'Alex', 'email': 'Alex@gmail.com', 'pwd': '124', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
-  // {'id': 5, 'username':'Juan', 'email': 'Juan@gmail.com', 'pwd': '125', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
-  // {'id': 6, 'username':'Roberto', 'email': 'Roberto@gmail.com', 'pwd': '126', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
-  // {'id': 7, 'username':'Eliza', 'email': 'Eliza@gmail.com', 'pwd': '127', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
+  {'id': 1, 'username':'luber Alexander', 'email': '1@gmail.com', 'pwd': '123', 'roles': ['superAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  {'id': 2, 'username':'Marcela Cuellar', 'email': '2@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': [2, 4]}, 'groupAdmin'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  {'id': 3, 'username':'Sarai Echavarria', 'email': '3@gmail.com', 'pwd': '123', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [1, 2, 3, 4], 'login': false, 'avatar': ''},
+  {'id': 4, 'username':'Alex', 'email': 'Alex@gmail.com', 'pwd': '124', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
+  {'id': 5, 'username':'Juan', 'email': 'Juan@gmail.com', 'pwd': '125', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
+  {'id': 6, 'username':'Roberto', 'email': 'Roberto@gmail.com', 'pwd': '126', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
+  {'id': 7, 'username':'Eliza', 'email': 'Eliza@gmail.com', 'pwd': '127', 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''},
 ]
  
-function updateGroupsJSON(usersUpDate) {
+function updateUsersJSON(usersUpDate) {
   // Convert the 'users' array to JSON format
-  const groupsJson = JSON.stringify(usersUpDate, null, 2);
-  fs.writeFile('server/services/users.json', groupsJson, function(err) {
+  const userJson = JSON.stringify(usersUpDate, null, 2);
+  fs.writeFile('server/services/users.json', userJson, function(err) {
     if (err) {
       console.error(err);
     } else {
@@ -91,7 +91,7 @@ function promoteUserAsAdmin (promoteUserEmail, groupIdSelected) {
     }
   }
   
-  updateGroupsJSON(users);
+  updateUsersJSON(users);
   return user
 }
 
@@ -104,9 +104,11 @@ function removeUser (userToRemove) {
 }
 
 function createNewUser (newUserEmail, password, username) {
-  users.push({'id': users.length + 1, 'username': username, 'email': newUserEmail, 'pwd': password, 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''});
- 
-  return users;
+  let usersCopy = users;
+   usersCopy.push({'id': users.length + 1, 'username': username, 'email': newUserEmail, 'pwd': password, 'roles': [{'groupAdmin': []}, 'user'], 'groups': [], 'login': false, 'avatar': ''});
+  
+  updateUsersJSON(usersCopy);
+  return usersCopy;
 }
 
 

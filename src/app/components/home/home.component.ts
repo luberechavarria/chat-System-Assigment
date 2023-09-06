@@ -331,6 +331,7 @@ export class HomeComponent implements OnInit{
   }
   
   createNewUser(event:any){
+    console.log(" removeUserFromChannel");
     this.usersService.createNewUser(this.currentuser, this.createNewUserEmail, this.password, this.username).subscribe({
       next:
         (data: any)=>{

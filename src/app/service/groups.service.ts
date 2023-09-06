@@ -31,15 +31,15 @@ export class GroupsService {
   }
   
   addExistedUserToGroup(user:any, userAddToGroupEmail: string, groupname:string){
-    return this.http.post<User>('http://localhost:3000/api/addExistedUserToGroup', {user: user, userAddToGroupEmail, groupname});
+    return this.http.post<Groups>('http://localhost:3000/api/addExistedUserToGroup', {user: user, userAddToGroupEmail, groupname});
   }
 
   removeGroup(user:any, groupname:string){
-    return this.http.post<User>('http://localhost:3000/api/removeGroup', {user: user, groupname});
+    return this.http.post<Groups>('http://localhost:3000/api/removeGroup', {user: user, groupname});
   }
 
   removeUserFromGroup(user:any, removeUserInGroupEmail:string, groupIdSelected:number){
-    return this.http.post<User>('http://localhost:3000/api/removeUserFromGroup', {user: user, removeUserInGroupEmail, groupIdSelected});
+    return this.http.post<any>('http://localhost:3000/api/removeUserFromGroup', {user: user, removeUserInGroupEmail, groupIdSelected});
   }
 
 }

@@ -121,7 +121,8 @@ function removeUserFromGroup (groupId, userId) {
   const index1 = groups.findIndex(item => item.id === groupId);
   
   groups.splice(index1, 1, groupSelected);
-  
+  console.log("DDDDDDDDDD", groups)
+  updateGroupsJSON(groups);
   return true;
 }
 

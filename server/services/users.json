@@ -3,7 +3,7 @@
     "id": 1,
     "username": "luber Alexander",
     "email": "1@gmail.com",
-    "pwd": "123",
+    "pwd": "",
     "roles": [
       "superAdmin"
     ],
@@ -13,7 +13,7 @@
       3,
       4
     ],
-    "login": false,
+    "login": true,
     "avatar": ""
   },
   {

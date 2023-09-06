@@ -155,7 +155,7 @@
   </div>
 
   <div class="user-list">
-    <h2 class="channel-group">users</h2>
+    <h2 class="channel-group">Channel users</h2>
     <ul *ngFor="let usersChannel of arrayUsersChannels">
       <li><button [ngClass]="{'white': usersChannel.id === userIdSelected}" class="userBtn" (click)="highLightChannelUsers(usersChannel.id)">{{ usersChannel.username }}</button></li>
       <!-- Add more users here -->

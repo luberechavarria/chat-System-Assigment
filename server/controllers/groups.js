@@ -82,7 +82,7 @@ const removeGroup = (req, res) => {
 }
 
 const removeUserFromGroup = (req, res) => {
-  // console.log("removeUserFromGroup", req.body)
+  console.log("removeUserFromGroup", req.body)
   if (!req.body) {
     return res.sendStatus(400);
   }

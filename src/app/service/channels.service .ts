@@ -27,15 +27,15 @@ export class ChannelsService {
   }
   
   addChannelToGroup(user:any, groupId:number, newChannelName: string){
-    return this.http.post<User>('http://localhost:3000/api/addChannelToGroup', {user: user, groupId, newChannelName});
+    return this.http.post<Channels>('http://localhost:3000/api/addChannelToGroup', {user: user, groupId, newChannelName});
   }
 
   removeUserFromChannel(user:any, removeUserInChannelEmail:string, channelIdSelected:number){
-    return this.http.post<User>('http://localhost:3000/api/removeUserFromChannel', {user: user, removeUserInChannelEmail, channelIdSelected});
+    return this.http.post<Channels>('http://localhost:3000/api/removeUserFromChannel', {user: user, removeUserInChannelEmail, channelIdSelected});
   }
 
   removeChannel(user:any, channelname:string, groupId:number){
-    return this.http.post<User>('http://localhost:3000/api/removeChannel', {user: user, channelname, groupId});
+    return this.http.post<Channels>('http://localhost:3000/api/removeChannel', {user: user, channelname, groupId});
   }
  
 }
