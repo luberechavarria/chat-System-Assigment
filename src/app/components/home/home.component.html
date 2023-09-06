@@ -127,6 +127,19 @@
     <button class="styleButton" (click)="showAddChannelToGroupBtn()" id="bt">Add channel to Group</button>
     <!-- addChannelToGroup end-->
 
+    <!-- remove channel from group start-->
+    <ng-container *ngIf="show9">
+      <form (submit)="removeChannel($event)">
+        <div class="form-group">
+          <label class="white" for="exampleInputEmail1">Remove channel from group</label>
+          <input type="text" [(ngModel)]="removeChannelName"  name="removeChannelName" class="form-control spaceTop" id="removeChannelName"  placeholder="Channel name">
+        </div>
+        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
+      </form>
+    </ng-container>
+    <button class="styleButton" (click)="showRemoveChannel()" id="bt">Remove channel</button>
+    <!-- addChannelToGroup end-->
+
     <!-- remove user from channel start-->
     <ng-container *ngIf="show8">
       <form (submit)="removeUserFromChannel($event)">

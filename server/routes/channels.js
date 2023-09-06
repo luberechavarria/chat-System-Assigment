@@ -9,5 +9,7 @@ router.post('/addChannelToGroup', channels.addChannelToGroup);
 
 router.post('/removeUserFromChannel', channels.removeUserFromChannel);
 
+router.post('/removeChannel', channels.removeChannel);
+
 
 module.exports = router;

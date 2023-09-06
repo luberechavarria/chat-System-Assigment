@@ -61,4 +61,20 @@ const removeUserFromChannel = (req, res) => {
   }
 }
 
-module.exports = {getChannels, addChannelToGroup, removeUserFromChannel};
+const removeChannel = (req, res) => {
+  console.log("removeChannel", req.body)
+  if (!req.body) {
+    return res.sendStatus(400);
+  }
+
+  if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
+    const updatedChannels = channelService.removeChannel(req.body.channelname, req.body.groupId);
+  
+    res.send(updatedChannels);
+  }else{
+    res.send('This user can not promote users to admin');
+  
+  }
+}
+
+module.exports = {getChannels, addChannelToGroup, removeUserFromChannel, removeChannel};

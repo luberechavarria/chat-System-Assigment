@@ -66,6 +66,9 @@ export class HomeComponent implements OnInit{
   public show8:boolean = false;
   public buttonName8:string = 'show8';
 
+  public show9:boolean = false;
+  public buttonName9:string = 'show9';
+
   promoteUserAsAdmin:string = '';
 
   removeUserEmail:string = '';
@@ -84,6 +87,8 @@ export class HomeComponent implements OnInit{
   removeUserInGroupEmail:string = '';
 
   removeUserInChannelEmail:string = '';
+
+  removeChannelName:string = '';
   
   
   private router = inject(Router)
@@ -187,6 +192,16 @@ export class HomeComponent implements OnInit{
     }
   }
 
+  // hide and show window remove  channel from group.
+  showRemoveChannel() {
+    this.show9 = !this.show9;
+    if(this.show9){  
+      this.buttonName9 = "Hide9";
+    }else{
+      this.buttonName9 = "Show9";
+    }
+  }
+
  
 
   createGroup(event:any){
@@ -257,6 +272,24 @@ export class HomeComponent implements OnInit{
       
       error:
         this.errormsg = "There is a problem removing group";
+      }
+    })
+  }
+
+  removeChannel(event:any){
+    this.ChannelsService.removeChannel(this.currentuser, this.removeChannelName, this.groupIdSelected).subscribe({
+      next:
+        (data: any)=>{
+          this.showRemoveChannel();
+          if (data){
+            console.log(" removeChannel", data);
+            this.channelsArray = data.map((channelData: any) => new Channels(channelData.id, channelData.name));
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem removing channel";
       }
     })
   }

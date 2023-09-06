@@ -99,6 +99,17 @@ function removeUserFromChannel (channelId, userId) {
   return channelSelected;
 }
 
+function removeChannel (channelname, groupId) {
+  channels = channels.filter(function(item) {
+ 
+    return item.name !== channelname
+  })
+  updateChannelJSON(channels);
+  
+  let channelsBelongGroup = getChannels(groupId);
+  return channelsBelongGroup;
+}
+
 module.exports = {
-  getChannels, addChannelToGroup, getAllChannels, removeUserFromChannel
+  getChannels, addChannelToGroup, getAllChannels, removeUserFromChannel, removeChannel
 };

@@ -70,20 +70,8 @@
     ]
   },
   {
-    "id": 8,
-    "name": "celos",
-    "group": 1,
-    "usersIdChannel": []
-  },
-  {
     "id": 9,
     "name": "foodMovie",
-    "group": 1,
-    "usersIdChannel": []
-  },
-  {
-    "id": 10,
-    "name": "go",
     "group": 1,
     "usersIdChannel": []
   }
