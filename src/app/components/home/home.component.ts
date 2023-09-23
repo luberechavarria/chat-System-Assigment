@@ -391,6 +391,7 @@ export class HomeComponent implements OnInit{
       next:
         (data: any)=>{
           if (Array.isArray(data)) {
+            console.log("groups but for now products", data)
             this.groupsArray = data.map((groupData: any) => new Groups(groupData.id, groupData.name));
           } else {
             this.errormsg = "Invalid data format";

@@ -23,7 +23,7 @@ export class GroupsService {
 
 
   getGroups(user:any){
-    return this.http.post<Groups>('http://localhost:3000/api/getGroups', user);
+    return this.http.get<Groups>('http://localhost:3000/api/getGroups', user);
   }
 
   createGroup(user:any, newGroupName:string){

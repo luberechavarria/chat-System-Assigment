@@ -3,7 +3,7 @@
     "id": 1,
     "username": "luber Alexander",
     "email": "1@gmail.com",
-    "pwd": "",
+    "pwd": "123",
     "roles": [
       "superAdmin"
     ],
