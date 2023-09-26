@@ -11,14 +11,14 @@ const clientOptions = {
 };
 
 const poolSize = 10;
-const DATABASE_NAME = 'mydb';
+const DATABASE_NAME = 'chatTesting1';
 module.exports = {
   connectToServer: async function () {
     try {
       const client = await MongoClient.connect(url, clientOptions);
       client.topology.poolSize = poolSize;
       _db = client.db( DATABASE_NAME);
-      console.log('Connected to MongoDB');
+      console.log('Connected to MongoDB', DATABASE_NAME);
       return _db;
     } catch (err) {
       console.error('Error connecting to MongoDB:', err);
