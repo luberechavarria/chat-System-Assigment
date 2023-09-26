@@ -88,7 +88,15 @@
 //   }
 // }
 
+const schema = require('../schema');
+
 const login = async(user, db) => {
+  //Uncomment this to create schema for the App when do login
+  // schema.user(db)
+  // schema.group(db)
+  // schema.channel(db)
+  // schema.chat(db)
+
   try{
     const userFound = await db.collection('products2').find({}).sort({name: 1}).toArray();
     

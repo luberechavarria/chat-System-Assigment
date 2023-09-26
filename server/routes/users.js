@@ -26,7 +26,7 @@ const controllerUsers = require("../controllers/users");
 
 const users = function (app, db) {
 
-  app.get('/api/login', async(req, res) => {
+  app.post('/api/login', async(req, res) => {
   
     if (!req.body) {
       return res.sendStatus(400);

@@ -15,9 +15,9 @@ app.use(cors());
 
 try{
   mongoUtil.connectToServer().then(db => {
-    //  require('./routes/channels.js')(app, db);
+     require('./routes/channels.js')(app, db);
      require('./routes/groups.js')(app, db);
-    //  require('./routes/users.js')(app, db);
+     require('./routes/users.js')(app, db);
     //require('./routes/chats.js')(app, db);
   
 
