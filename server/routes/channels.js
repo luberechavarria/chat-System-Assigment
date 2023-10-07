@@ -24,20 +24,24 @@ const controllerChannels = require("../controllers/channels");
 
 const channels = function (app, db) {
 
-  app.get('/api/getChannels', async(req, res) => {
-  
+  app.post('/api/getChannels', async(req, res) => {
+   
     if (!req.body) {
       return res.sendStatus(400);
     }
 
-    const group = {
-      ...req.body,
+    // const group = {
+      // ...req.body,
       // price: Decimal128.fromString(req.body.price),
       // _id: Math.floor(Math.random() * 65536),
-    }
+    // }
+   
+    const groupI = req.body.groupId
+
+    console.log("chnnaels of group luber 11111", groupI);
 
     try{
-     const allChannels = await controllerChannels.getChannels(group, db);
+     const allChannels = await controllerChannels.getChannels(groupI, db);
     
       return res.status(200).send(allChannels);
     }catch(err){

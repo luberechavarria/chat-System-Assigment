@@ -137,7 +137,7 @@ const channel = (db) => {
   //           description: 'Name of the product',
   //           maxLength: 50,
   //         },
-  //         group: {
+  //         groupId: {
   //           bsonType: 'int',
   //           description: 'This is the id group that is belong this channel',
   //           maxLength: 255,
@@ -177,6 +177,9 @@ const channel = (db) => {
   // db.collection('channels').insertOne({
   //   id: 8, name: "houses", group: 1, usersIdChannel: [4, 5],
   // })
+   db.collection('channels').insertOne({
+    id: 9, name: "Music", group: 4, usersIdChannel: [4, 5],
+  })
 }
 
 const chat = (db) => {

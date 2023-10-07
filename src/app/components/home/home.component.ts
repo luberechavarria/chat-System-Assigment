@@ -406,6 +406,7 @@ export class HomeComponent implements OnInit{
   fetchChannels(groupId: number){
     console.log("at get fetchChannels, before request");
     this.groupIdSelected = groupId;
+    console.log("ffffff", groupId)
     this.ChannelsService.getChannels(groupId).subscribe({
       next:
         (data: any)=>{

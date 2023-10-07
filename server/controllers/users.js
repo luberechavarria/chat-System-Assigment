@@ -90,7 +90,8 @@
 
 const schema = require('../schema');
 
-const login = async(user, db) => {
+const login = async(user, db) => { //WORKING MONGO
+
   //Uncomment this to create schema for the App when do login
   // schema.user(db)
   // schema.group(db)
@@ -98,15 +99,15 @@ const login = async(user, db) => {
   // schema.chat(db)
 
   try{
-    const userFound = await db.collection('products2').find({}).sort({name: 1}).toArray();
+    const userFound= await db.collection('users').findOne({email: user.email}, {upwd: user.upwd});
     
     if(userFound){
-      user.login = true;
-        user.pwd = '';
-
+      await db.collection('users').updateOne({login: false}, {$set:{login: true}});
+      userFound.pwd = '';
+      
         return userFound;
       }else{
-        return {data: false, code: 222, message: "something"};
+        return {code: 400, message: "User could be found"};
     }
    
   }catch(err){
@@ -115,22 +116,19 @@ const login = async(user, db) => {
   }
 }
 
-const getUsersChannel = async(channel, db) => {
+const getUsersChannel = async(channelId, db) => {//WORKING MONGO
   try{
-    
-    const channels = await db.collection('products2').find({}).sort({name: 1}).toArray();
+    const channelClicked = await db.collection('channels').find({id: channelId}).sort({name: 1}).toArray();
+   
+    let channelUserIds = channelClicked[0].usersIdChannel;
+  
+    let usersChannel = [];
 
-    let channelClicked;
-    
-    for (let i=0; i<channels.length; i++){//get the chanel which was clicked
-    if (req.body.channelId == channels[i].id ) {
-      channelClicked = channels[i];
-    }
+    for (let i=0; i<channelUserIds.length; i++){
+      const user = await db.collection('users').find({id: channelUserIds[i]}).sort({name: 1}).toArray();
+      usersChannel.push(user[0]);
     };
     
-    //replace this with mongo request
-    let userChannels = userService.getUsers(channelClicked.usersIdChannel, 'id');//bring all user from the channel clicked
-
     return usersChannel;
   }catch(err){
     console.log(JSON.stringify(err, null, 2));
@@ -186,6 +184,5 @@ const createNewUser = async(user, db) => {
     throw err;
   }
 }
-
-
 module.exports = { login, getUsersChannel, promoteUserAsAdmin, removeUser, createNewUser };
+

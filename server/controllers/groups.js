@@ -107,10 +107,9 @@
 //   }
 // }
 
-const getGroups = async(product, db) => {
+const getGroups = async(product, db) => { //WORKING MONGO
   try{
-    const showAllGroups = await db.collection('products2').find({}).sort({name: 1}).toArray();
-    console.log("111111111", showAllGroups)
+    const showAllGroups = await db.collection('groups').find({}).sort({name: 1}).toArray();
     return showAllGroups;
    
   }catch(err){
@@ -121,7 +120,6 @@ const getGroups = async(product, db) => {
 
 const createGroup = async(product, db) => {
   try{
-    console.log("111111111", product)
     if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin') ){
       const newGroup = await db.collection('products2').insertOne(product)
       return newGroup;

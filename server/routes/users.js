@@ -34,8 +34,6 @@ const users = function (app, db) {
     
     const user = {
       ...req.body,
-      // price: Decimal128.fromString(req.body.price),
-      // _id: Math.floor(Math.random() * 65536),
     }
 
     try{
@@ -50,21 +48,26 @@ const users = function (app, db) {
     }
   });
 
-  app.get('/api/getUsersChannel', async(req, res) => {
-    console.log("hereeeeeeeee", req.body);
+  app.post('/api/getUsersChannel', async(req, res) => {
    
     if (!req.body) {
       return res.sendStatus(400);
     }
 
-    const channel = {
-      ...req.body,
-      price: Decimal128.fromString(req.body.price),
-      _id: Math.floor(Math.random() * 65536),
-    }
+    // const channel = {
+    //   ...req.body,
+    //   price: Decimal128.fromString(req.body.price),
+    //   _id: Math.floor(Math.random() * 65536),
+    // }
+     // const channel = {
+    //   ...req.body,
+    //   price: Decimal128.fromString(req.body.price),
+    //   _id: Math.floor(Math.random() * 65536),
+    // }
+    const channelId = req.body.channelId
 
     try{
-     const userChannel = await controllerUsers.getUsersChannel(channel, db);
+     const userChannel = await controllerUsers.getUsersChannel(channelId, db);
     
       return res.status(200).send(userChannel);
     }catch(err){

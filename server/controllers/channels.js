@@ -75,9 +75,9 @@
 //   }
 // }
 
-const getChannels = async(group, db) => {
+const getChannels = async(groupId, db) => { //WORKING MONGO
   try{
-    const channelsInGroup = await db.collection('products2').find({}).sort({name: 1}).toArray();
+    const channelsInGroup = await db.collection('channels').find({group: groupId}).sort({name: 1}).toArray();
     return channelsInGroup;
    
   }catch(err){
