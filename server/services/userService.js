@@ -112,6 +112,7 @@ function createNewUser (newUserEmail, password, username) {
 }
 
 
+
 module.exports = {
   getUsers, login, promoteUserAsAdmin, removeUser, createNewUser
 };

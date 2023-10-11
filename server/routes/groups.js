@@ -23,46 +23,56 @@ const ObjectId = require('mongodb').ObjectId;
 const { v4: uuidv4 } = require('uuid');
 
 const controllerGroups = require("../controllers/groups");
+const loginValidation = require('../middlewares/loginValidations')
 
 const groups = function (app, db) {
 
-  app.get('/api/getGroups', async(req, res) => {
-  
-    if (!req.body) {
-      return res.sendStatus(400);
-    }
+  app.get('/api/getAllGroups', async(req, res) => {
     
     try{
-     const allGroups = await controllerGroups.getGroups(null, db);
+     const allGroups = await controllerGroups.getAllGroups();
     
       return res.status(200).send(allGroups);
     }catch(err){
-      console.log(JSON.stringify(err, null, 2));
+      console.log(err);
       return res.status(500).send({
         error: err,
       })
     }
   });
 
-  app.get('/api/createGroup', async(req, res) => {
-    console.log("hereeeeeeeee", req.body);
-   
-    if (!req.body) {
-      return res.sendStatus(400);
-    }
 
-    const group = {
-      ...req.body,
-      price: Decimal128.fromString(req.body.price),
-      _id: Math.floor(Math.random() * 65536),
-    }
-
+  app.get('/api/getMyGroups', async(req, res) => {
+    
     try{
-     const allGroups = await controllerGroups.createGroup(group, db);
+     const allGroups = await controllerGroups.getAllGroups();
     
       return res.status(200).send(allGroups);
     }catch(err){
-      console.log(JSON.stringify(err, null, 2));
+      console.log(err);
+      return res.status(500).send({
+        error: err,
+      })
+    }
+  });
+
+  app.post('/api/createGroup', loginValidation.canCreateGroup, async(req, res) => {
+    if (!req.body || !req.body.name) {
+      return res.sendStatus(400);
+    }
+
+    try{
+      const newGroup = {
+        name: req.body.name,
+        userAdmins: [],
+        joinRequesters: [],
+        ownerId: new ObjectId(req.query.token) // Id of the admin
+      }
+      const group = await controllerGroups.createGroup(newGroup);
+    
+      return res.status(200).send(group);
+    }catch(err){
+      console.log(err);
       return res.status(500).send({
         error: err,
       })
@@ -85,26 +95,25 @@ const groups = function (app, db) {
     
       return res.status(200).send(groupUpdated);
     }catch(err){
-      console.log(JSON.stringify(err, null, 2));
+      console.log(err);
       return res.status(500).send({
         error: err,
       })
     }
   });
 
-  app.get('/api/removeGroup', async(req, res) => {
-   
+  app.post('/api/removeGroup', async(req, res) => {
+    
     if (!req.body) {
       return res.sendStatus(400);
     }
 
     const group = {
-      ...req.body,
-   
+      name: req.body.groupname
     }
 
     try{
-     const groupUpdated = await controllerGroups.removeGroup(group, db);
+     const groupUpdated = await controllerGroups.removeGroup(req.body.user, group, db);
     
       return res.status(200).send(groupUpdated);
     }catch(err){

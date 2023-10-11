@@ -22,8 +22,8 @@ export class usersService {
   }
 
 
-  getUsersChannel(channelId:number){
-    return this.http.post<Channels>('http://localhost:3000/api/getUsersChannel', {channelId: channelId});
+  getUsersFromChannel(channelId:number){
+    return this.http.post<Channels>('http://localhost:3000/api/getUsersFromChannel', {channelId: channelId});
   }
 
   promoteUserToAdmin(user:any, promoteUserEmail: string, groupIdSelected:number){
@@ -36,6 +36,12 @@ export class usersService {
 
   createNewUser(user:any, createNewUserEmail: string, password:string, username:string){
     return this.http.post<User>('http://localhost:3000/api/createNewUser', {user: user, createNewUserEmail, password, username});
+  }
+
+
+  getGlobalUsers(user:any){
+    return this.http.get<User>(`http://localhost:3000/api/users?token=${user._id}`);
+      
   }
 
   

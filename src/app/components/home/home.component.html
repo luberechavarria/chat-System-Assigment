@@ -4,7 +4,18 @@
     <h2 class="group-h2" >Groups</h2>
     <ul class="group-li" *ngFor="let group of groupsArray">
       <!-- <li><button class="groupsButton groupNotSelected" (click)="fetchChannels(group.id)">{{ group.name }}</button></li> -->
-      <li><button [ngClass]="{'white': group.id === groupIdSelected}" class="groupsButton" (click)="fetchChannels(group.id)">{{ group.name }}</button></li>
+      <div class="group-flex">
+        <li><button [ngClass]="{'white': group.id === groupIdSelected}" class="groupsButton" (click)="fetchChannels(group.id)">{{ group.name }}</button></li>
+        <select id="fruitSelect" class="selectClass">
+          <option  value="apple"></option>
+          <option [value]="group.name">
+            <button >Remove group</button>
+          </option>
+        </select>
+      </div>
+   
+
+    <!-- <p>You selected: <span id="selectedFruit"></span></p> -->
 
     </ul>
 
@@ -153,6 +164,13 @@
     <button class="styleButton" (click)="showRemoveUserFromChannel()" id="bt">Remove user from Channel</button>
     <!-- remove user from channel end-->
   </div>
+
+  <!-- <div class="user-list">
+    <h2 class="channel-group">Global users</h2>
+    <ul *ngFor="let usersChannel of arrayUsersChannels">
+      <li><button [ngClass]="{'white': usersChannel.id === userIdSelected}" class="userBtn" (click)="highLightChannelUsers(usersChannel.id)">{{ usersChannel.username }}</button></li>
+    </ul>
+  </div> -->
 
   <div class="user-list">
     <h2 class="channel-group">Channel users</h2>

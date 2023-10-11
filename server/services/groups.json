@@ -27,5 +27,15 @@
       2,
       3
     ]
+  },
+  {
+    "id": 4,
+    "name": {
+      "name": "Devs Group",
+      "userAdmins": [],
+      "joinRequesters": [],
+      "ownerId": "65258cf088ac643fc5247516"
+    },
+    "usersIdGroup": []
   }
 ]

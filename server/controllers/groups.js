@@ -1,4 +1,4 @@
-// const groupService = require('../services/groupService');
+const groupService = require('../services/groups');
 // const userService = require('../services/userService');
 
 // const getGroups = (req, res) => {
@@ -107,27 +107,22 @@
 //   }
 // }
 
-const getGroups = async(product, db) => { //WORKING MONGO
+const getAllGroups = async() => {//WORKING MONGO
   try{
-    const showAllGroups = await db.collection('groups').find({}).sort({name: 1}).toArray();
-    return showAllGroups;
-   
+    const groups = await groupService.getAllGroups();
+    return groups;
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
     throw err;
   }
 }
 
-const createGroup = async(product, db) => {
+const createGroup = async(newGroup) => {
   try{
-    if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin') ){
-      const newGroup = await db.collection('products2').insertOne(product)
-      return newGroup;
-    }else{
-      return 'This user can not create groups';
-    }
+    const group = await groupService.createGroup(newGroup);
+    return group;
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
     throw err;
   }
 }
@@ -153,24 +148,26 @@ const addExistedUserToGroup = async(product, db) => {
           res.send('This user can not promote users to admin');
         }
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
     throw err;
   }
 }
 
-const removeGroup = async(name, db) => {
+const removeGroup = async(user, group, db) => {//WORKING MONGO
   try{
-    if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
-      // const updatedGroups = groupService.removeGroup(req.body.groupname);
-      // res.send(updatedGroups); Old code
-      const groupRemoved = await db.collection('products2').deleteOne({name: name});
-      const getAllGroupsUpdated = await db.collection('products2').find({}).sort({name: 1}).toArray();
-      return getAllGroupsUpdated;
+    if ( user.roles.includes('superAdmin') || user.roles.includes('groupAdmin')){
+     
+      const groupRemoved = await db.collection('groups').deleteOne({name: group.name});
+      const getAllGroupsUpdated = await db.collection('groups').find({}).sort({name: 1}).toArray();
+      
+      if(getAllGroupsUpdated.acknowledged){
+        return getAllGroupsUpdated;
+      }
     }else{
       return 'This user can not promote users to admin';
     }
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
     throw err;
   }
 }
@@ -201,9 +198,9 @@ const removeUserFromGroup = async(product, db) => {
     }
     
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
     throw err;
   }
 }
 
-module.exports = {getGroups, createGroup, addExistedUserToGroup, removeGroup, removeUserFromGroup}
+module.exports = {getAllGroups, createGroup, addExistedUserToGroup, removeGroup, removeUserFromGroup}

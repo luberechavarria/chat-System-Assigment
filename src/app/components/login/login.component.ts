@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit{
 
  
   newuser:User = new User();
-  email:string = "";
+  username:string = "";
   pwd:string = "";
   loggedin:boolean = false;
   
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit{
   signin(event:any){
     console.log("at signin");
     event.preventDefault();
-    this.authService.login(this.email,this.pwd).subscribe({
+    this.authService.login(this.username,this.pwd).subscribe({
       next:
         (data)=>{
           console.log(data)

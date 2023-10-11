@@ -99,6 +99,32 @@ body {
   margin-top: 10px;
 }
 
+.group-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.selectClass {
+  background: transparent;
+  border: none;
+
+}
+.luber {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100px;
+  height: 100px;
+  background: white;
+}
+
+
+
+
+
 
 
 

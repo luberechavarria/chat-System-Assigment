@@ -5,7 +5,7 @@
 
 // router.post('/login', users.login);
 
-// router.post('/getUsersChannel', users.getUsersChannel);
+// router.post('/getUsersFromChannel', users.getUsersFromChannel);
 
 // router.post('/promoteUserAsAdmin', users.promoteUserAsAdmin);
 
@@ -22,25 +22,33 @@ const Decimal128 = require('mongodb').Decimal128;
 const ObjectId = require('mongodb').ObjectId;
 const { v4: uuidv4 } = require('uuid');
 
-const controllerUsers = require("../controllers/users");
+const usersController = require("../controllers/users");
+const userService =  require("../services/users");
+const loginValidation = require('../middlewares/loginValidations')
+
+const schema = require('../schema');
 
 const users = function (app, db) {
-
   app.post('/api/login', async(req, res) => {
-  
-    if (!req.body) {
+    //Uncomment this to create schema for the App when do login
+    // schema.user(db)
+    // schema.group(db)
+    // schema.channel(db)
+    // schema.chat(db)
+    if (!req.body || !req.body.username || !req.body.password) {
       return res.sendStatus(400);
-    }
-    
-    const user = {
-      ...req.body,
     }
 
     try{
-     const userFound = await controllerUsers.login(user, db);
-    
-      return res.status(200).send(userFound);
+      const userFound = await usersController.login(req.body.username, req.body.password);
+      if (userFound) {
+        return res.status(200).send(userFound);
+      } else {
+        return res.status(400).send({ code: 400, message: "User couldn't be found" });
+      }
     }catch(err){
+console.log("error doing login", err);
+
       console.log(JSON.stringify(err, null, 2));
       return res.status(500).send({
         error: err,
@@ -48,26 +56,16 @@ const users = function (app, db) {
     }
   });
 
-  app.post('/api/getUsersChannel', async(req, res) => {
+  app.post('/api/getUsersFromChannel', async(req, res) => {
    
-    if (!req.body) {
+    if (!req.body || !req.body.channelId) {
       return res.sendStatus(400);
     }
 
-    // const channel = {
-    //   ...req.body,
-    //   price: Decimal128.fromString(req.body.price),
-    //   _id: Math.floor(Math.random() * 65536),
-    // }
-     // const channel = {
-    //   ...req.body,
-    //   price: Decimal128.fromString(req.body.price),
-    //   _id: Math.floor(Math.random() * 65536),
-    // }
-    const channelId = req.body.channelId
+    const channelId = req.body.channelId;
 
     try{
-     const userChannel = await controllerUsers.getUsersChannel(channelId, db);
+     const userChannel = await usersController.getUsersFromChannel(channelId);
     
       return res.status(200).send(userChannel);
     }catch(err){
@@ -90,7 +88,7 @@ const users = function (app, db) {
     }
 
     try{
-     const userPromotedAdmin = await controllerUsers.promoteUserAsAdmin(user, db);
+     const userPromotedAdmin = await usersController.promoteUserAsAdmin(user, db);
     
       return res.status(200).send(userPromotedAdmin);
     }catch(err){
@@ -101,9 +99,9 @@ const users = function (app, db) {
     }
   });
 
-  app.get('/api/removeUser', async(req, res) => {
+  app.delete('/api/removeUser/:id', async(req, res) => {
    
-    if (!req.body) {
+    if (!req.path) {
       return res.sendStatus(400);
     }
 
@@ -113,7 +111,7 @@ const users = function (app, db) {
     }
 
     try{
-     const userRemoved = await controllerUsers.removeUser(user, db);
+     const userRemoved = await usersController.removeUser(user, db);
     
       return res.status(200).send(userRemoved);
     }catch(err){
@@ -126,17 +124,18 @@ const users = function (app, db) {
 
   app.get('/api/createNewUser', async(req, res) => {
    
-    if (!req.body) {
+    if (!req.body || !req.body.username || !req.body.password) {
       return res.sendStatus(400);
     }
 
-    const user = {
-      ...req.body,
-   
+    const newUser = {
+      username: req.body.username,
+      pwd: req.body.password,
+      email: req.body.email
     }
 
     try{
-     const userCreated = await controllerUsers.createNewUser(user, db);
+      const userCreated = await usersController.createNewUser(newUser);
     
       return res.status(200).send(userCreated);
     }catch(err){
@@ -145,6 +144,22 @@ const users = function (app, db) {
         error: err,
       })
     }
+  });
+
+  app.get('/api/user/:id', loginValidation.isAdmin, async(req, res) => {
+    const user = await userService.getUserById(req.params.id);
+   return res.status(200).send({
+    user
+   })
+  });
+
+  app.get('/api/users', async(req, res) => {
+    const user = await usersController.getUsersByRole(req.query.token);
+   return res.status(200).send({
+    user
+   })
+  
+
   });
 }
 

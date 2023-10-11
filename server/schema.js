@@ -1,60 +1,66 @@
 
 const user = (db) => {
-  // db.createCollection('users', {
-  //   validator: {
-  //     $jsonSchema: {
-  //       bsonType: 'object',
-  //       required: ['username', 'email'],
-  //       properties: {
-  //         _id: {
-  //           bsonType: 'objectId',
-  //         },
-  //         username: {
-  //           bsonType: 'string',
-  //           description: 'User Name',
-  //           maxLength: 30,
-  //         },
-  //         email: {
-  //           bsonType: 'string',
-  //           description: 'Address email',
-  //           maxLength: 30,
-  //         },
-  //         pwd: {
-  //           bsonType: 'decimal',
-  //           description: 'User password',
-  //           maxLength: 30,
-  //         },
-  //         roles: {
-  //           bsonType: "array",
-  //           items: {
-  //             bsonType: ["object", "string"],
-  //             properties: {
-  //               groupAdmin: {
-  //                 bsonType: "array",
-  //                 items: {
-  //                   bsonType: "string"
-  //                 }
-  //               }
-  //             }
-  //           }
-  //         },
-  //         groups: {
-  //           bsonType: [Number],
-  //           description: 'User roles in the chat',
-  //         },
-  //         login: {
-  //           bsonType: Boolean,
-  //           description: 'User login in the chat',
-  //         },
-  //         avatar: {
-  //           bsonType: 'string',
-  //           description: 'User avatar in the chat',
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
-
+//   db.createCollection('users', {
+//     validator: {
+//       $jsonSchema: {
+//         bsonType: 'object',
+//         required: ['username', 'email'],
+//         properties: {
+//           _id: {
+//             bsonType: 'objectId',
+//           },
+//           username: {
+//             bsonType: 'string',
+//             description: 'User Name',
+//             maxLength: 30,
+//           },
+//           email: {
+//             bsonType: 'string',
+//             description: 'Address email',
+//             maxLength: 30,
+//           },
+//           pwd: {
+//             bsonType: 'string',
+//             description: 'User password',
+//             maxLength: 30,
+//           },
+//           roles: {
+//             bsonType: "array",
+//             items: {
+//               bsonType: ["object", "string"],
+//               properties: {
+//                 groupAdmin: {
+//                   bsonType: "array",
+//                   items: {
+//                     bsonType: "string"
+//                   }
+//                 }
+//               }
+//             }
+//           },
+//           groups: {
+//             bsonType: "array",
+//             items: {
+//               bsonType: "string"
+//             },
+//             description: 'User groups in the chat',
+//           },
+//           login: {
+//             bsonType: Boolean,
+//             description: 'User login in the chat',
+//           },
+//           avatar: {
+//             bsonType: 'string',
+//             description: 'User avatar in the chat',
+//           },
+//         },
+//       },
+//     },
+//   });
+//  db.collection('users').insertOne({
+//     username: "admin", email: 'admin@gmail.com', pwd: '123', roles: ['superAdmin'],
+//     groups: [], login: false, avatar: ""
+//   })
   //create a user for testing
   // db.collection('users').insertOne({
   //   id: 1, username: "Luber", email: '1@gmail.com', pwd: '123', roles: [{'groupAdmin': []}, 'superAdmin'],
@@ -80,29 +86,41 @@ const user = (db) => {
 }
 
 const group = (db) => {
-  // db.createCollection('groups', {
-  //   validator: {
-  //     $jsonSchema: {
-  //       bsonType: 'object',
-  //       required: ['name'],
-  //       properties: {
-  //         _id: {
-  //           bsonType: 'objectId',
-  //         },
-  //         name: {
-  //           bsonType: 'string',
-  //           description: 'Name of the product',
-  //           maxLength: 50,
-  //         },
-  //         usersIdGroup: {
-  //           bsonType: [Number],
-  //           description: 'Description',
-  //           maxLength: 255,
-  //         },
-  //       },
-  //     },
-  //   }
-  // });
+  db.createCollection('groups', {
+    validator: {
+      $jsonSchema: {
+        bsonType: 'object',
+        required: ['name'],
+        properties: {
+          _id: {
+            bsonType: 'objectId',
+          },
+          name: {
+            bsonType: 'string',
+            description: 'Name of the product',
+            maxLength: 50,
+          },
+          userAdmins: {
+            bsonType: "array",
+            items: {
+              bsonType: 'objectId',
+            },
+            description: 'User admins in the group',
+          },
+          joinRequesters: {
+            bsonType: "array",
+            items: {
+              bsonType: 'objectId',
+            },
+            description: 'Users requesting access to the group',
+          },
+          ownerId: {
+            bsonType: 'objectId',
+          },
+        },
+      },
+    }
+  });
 
    //create a group for testing
   // db.collection('groups').insertOne({

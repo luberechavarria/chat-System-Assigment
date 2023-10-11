@@ -11,7 +11,7 @@ const clientOptions = {
 };
 
 const poolSize = 10;
-const DATABASE_NAME = 'chatTesting1';
+const DATABASE_NAME = 'chatTesting2';
 module.exports = {
   connectToServer: async function () {
     try {

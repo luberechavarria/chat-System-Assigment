@@ -425,7 +425,25 @@ export class HomeComponent implements OnInit{
   fetchUsersChannel(channelId: number){
     console.log("at get fetchChannels, before request");
     this.channelIdSelected = channelId;
-    this.usersService.getUsersChannel(channelId).subscribe({
+    this.usersService.getUsersFromChannel(channelId).subscribe({
+      next:
+        (data: any)=>{
+          if (Array.isArray(data)) {
+            this.arrayUsersChannels = data.map((usersChannelData: any) => new User(usersChannelData.id, usersChannelData.username));
+          } else {
+            this.errormsg = "Invalid data format";
+          }
+      
+      error:
+        this.errormsg = "There is a problem with the channels";
+      }
+    })
+  }
+
+  fetchGlobalUsers(channelId: number){
+    console.log("at get fetchChannels, before request");
+    this.channelIdSelected = channelId;
+    this.usersService.getGlobalUsers(channelId).subscribe({
       next:
         (data: any)=>{
           if (Array.isArray(data)) {
