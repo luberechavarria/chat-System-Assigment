@@ -14,7 +14,10 @@ const getChatsByChannelId = async(channelId) => {//WORKING MONGO
 const sendMessage = async(newChat, io) => {
   try{
     const result = await chatService.createChat(newChat);
-    io.sockets.emit(newChat.channelId, newChat);
+    if (io) {
+      console.log("sending socket message", newChat);
+      io.sockets.emit(newChat.channelId.toString(), newChat);
+    }
     return result;
   }catch(err){
     console.log(err);

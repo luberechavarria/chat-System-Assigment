@@ -27,7 +27,7 @@
         <button type="submit" class="btn btn-primary spaceTop">Submit</button>
       </form>
     </ng-container>
-    <button class="styleButton" (click)="showCreateGroupBtn()" id="bt">Create group</button>
+    <button *ngIf="canCreateGroups === true" class="styleButton" (click)="showCreateGroupBtn()" id="bt">Create group</button>
     <!-- createGroup end-->
 
   </div>
@@ -49,10 +49,10 @@
         <button type="submit" class="btn btn-primary spaceTop">Submit</button>
       </form>
     </ng-container>
-    <button *ngIf="groupIdSelected" class="styleButton" (click)="showAddChannelToGroupBtn()" id="bt">Add channel to Group</button>
+    <button *ngIf="groupIdSelected && canCreateGroups === true" class="styleButton" (click)="showAddChannelToGroupBtn()" id="bt">Add channel to Group</button>
     <!-- addChannelToGroup end-->
 
-    <button *ngIf="groupIdSelected && channelIdSelected" class="styleButton" (click)="removeChannel()" id="bt">Remove channel</button>
+    <button *ngIf="groupIdSelected && channelIdSelected && canCreateGroups === true" class="styleButton" (click)="removeChannel()" id="bt">Remove channel</button>
     <!-- addChannelToGroup end-->
   </div>
 
@@ -64,7 +64,7 @@
             <div class="card-header">
               <h1 class="text-center">Welcome to Our Chat</h1>
             </div>
-            <div class="card-body card-body-size" id="chat-content">
+            <div class="card-body card-body-size" #chatContent id="chat-content">
               <!-- Chat messages will be displayed here -->
               <ul class="list-group">
                 <li class="list-group-item chat-item" *ngFor="let chat of chats">

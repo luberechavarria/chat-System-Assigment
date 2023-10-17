@@ -28,17 +28,19 @@ export class AppComponent {
   login: boolean = false;
   profile: boolean = false;
   users: boolean = false;
+  canViewUsers: boolean = false;
 
   get currentuser(): any {
-    return this.authServices.getCurrentuser();
+    const user = this.authServices.getCurrentuser() || '{}';
+    return JSON.parse(user);
   }
- 
 
   get isLoggedin(): boolean {
     return this.authServices.isLoggedin();
   }
 
   ngOnInit() {
+    this.canViewUsers = !this.currentuser.roles.includes('user');
     const url = this.location.path();
     
     if (url === '/home') {

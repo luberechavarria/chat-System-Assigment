@@ -20,7 +20,7 @@
           </td>
           <td class="d-flex">
             <button class="btn btn-danger mx-2" (click)="removeUser(user)">Remove</button>
-            <button *ngIf="user.roles[0] === 'groupAdmin'" class="btn btn-primary mx-2" (click)="toggleGroupPermissions(user)">Edit Group Permissions</button>
+            <button *ngIf="user.roles[0] !== 'superAdmin'" class="btn btn-primary mx-2" (click)="toggleGroupPermissions(user)">Edit Group Permissions</button>
           </td>
         </tr>
       </tbody>

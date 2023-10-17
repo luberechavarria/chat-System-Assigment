@@ -3,7 +3,7 @@
   
     <!-- Add Group Button -->
     <div class="row mt-2">
-        <div *ngIf="!showAddForm" class="col-md-2">
+        <div *ngIf="!showAddForm && canCreateGroups === true" class="col-md-2">
             <div class="form-group">
                 <button class="btn btn-primary" (click)="showAddGroupForm()">Add Group</button>
             </div>
@@ -35,7 +35,8 @@
             <tr *ngFor="let group of groups">
             <td>{{ group.name }}</td>
             <td>
-                <button class="btn btn-danger" (click)="removeGroup(group)">Remove</button>
+                <button *ngIf="canCreateGroups === true" class="btn btn-danger" (click)="removeGroup(group)">Remove</button>
+                <button *ngIf="!canCreateGroups" class="btn btn-primary" (click)="requestAccess(group)">Request Access to Group</button>
             </td>
             </tr>
         </tbody>

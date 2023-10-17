@@ -75,7 +75,10 @@ const createNewUser = async(newUser) => {
     if (userExists) {
       return { userExists: true };
     }
-    const user = await userService.createNewUser(newUser);
+    const user = await userService.createNewUser({
+      ...newUser,
+      roles: ['user'], // By default set 'user' role
+    });
     return user;
   }catch(err){
     console.log(err);

@@ -58,7 +58,8 @@ const chats = function (app) {
         userId: new ObjectId(req.query.token), // Id of the admin
         channelId: new ObjectId(req.body.channelId)
       }
-      const group = await chatController.sendMessage(newChat);
+      var io = req.app.get('io');
+      const group = await chatController.sendMessage(newChat, io);
     
       return res.status(200).send(group);
     }catch(err){

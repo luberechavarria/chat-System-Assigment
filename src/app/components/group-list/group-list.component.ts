@@ -7,6 +7,7 @@ import { GroupsService } from '../../service/groups.service';
 
 import { Groups } from 'src/app/groups';
 import { parseGroup } from 'src/app/helpers/group-helper';
+import { User } from 'src/app/user';
 
 @Component({
   selector: 'app-group-list',
@@ -18,12 +19,17 @@ import { parseGroup } from 'src/app/helpers/group-helper';
 export class GroupListComponent  implements OnInit {
   private authService = inject(AuthService);
   private groupsService = inject(GroupsService);
+  
   showAddForm: boolean = false;
+  canCreateGroups: boolean = false;
   groups: Groups[] = [];
   errormsg = "";
   newGroupName: string = "";
+  currentuser:any = new User();
 
   ngOnInit() {
+    this.currentuser = JSON.parse(this.authService.getCurrentuser() || '{}');
+    this.canCreateGroups = !this.currentuser.roles.includes('user');
     this.fetchAllGroups()
   }
 
@@ -58,6 +64,10 @@ export class GroupListComponent  implements OnInit {
         error: (data: any) => console.log(data?.error)
       });
     }
+  }
+
+  requestAccess(group: Groups) {
+    alert("Coming soon!");
   }
 
   fetchAllGroups(){

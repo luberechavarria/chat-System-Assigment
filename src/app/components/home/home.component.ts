@@ -1,4 +1,4 @@
-import { Component, OnInit,inject } from '@angular/core';
+import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import {User} from "../../user";
 import { AuthService } from '../../service/auth.service';
 import { parseChat } from 'src/app/helpers/chat-helper';
 import { io } from 'socket.io-client';
-import { Socket } from 'ngx-socket-io';
+import { SocketService } from 'src/app/service/socket.service';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +25,23 @@ import { Socket } from 'ngx-socket-io';
 })
 export class HomeComponent implements OnInit{
   
+  @ViewChild('chatContent', { static: false }) private chatContent!: ElementRef | undefined;
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  // Function to scroll to the bottom of the chat content
+  private scrollToBottom(): void {
+    if (this.chatContent) {
+      try {
+        this.chatContent.nativeElement.scrollTop = this.chatContent.nativeElement.scrollHeight;
+      } catch (err) {
+        console.log(err);
+      };
+    }
+  }
+
   groupIdSelected = ''; // Keep highLight the group selected
   channelIdSelected = ''; // Keep highLight the channelIdSelected selected
   groups:Groups[] = [];
@@ -50,6 +67,8 @@ export class HomeComponent implements OnInit{
   public show9:boolean = false;
   public buttonName9:string = 'show9';
 
+  public canCreateGroups:boolean = false;
+
   userAddToGroupEmail:string = '';
   groupname:string = '';
 
@@ -70,15 +89,19 @@ export class HomeComponent implements OnInit{
   private usersService = inject(UsersService);
   private chatService = inject(ChatService);
   private authService = inject(AuthService);
-  // private socket = inject(Socket);
-  constructor(private socket: Socket) {}
-
+  private socket = inject(SocketService);
+  // constructor(private socket: Socket) {}
+  // constructor(private socket: Socket) {
+  //   // Your component logic here
+  // }
   // chat
   newMessage: string = '';
   chats: Chat[] = [];
 
+  
   ngOnInit() {
     this.currentuser = JSON.parse(this.authService.getCurrentuser() || '{}');
+    this.canCreateGroups = !this.currentuser.roles.includes('user');
     this.fetchGroups();
   }
 
@@ -140,7 +163,9 @@ export class HomeComponent implements OnInit{
         (data: any)=>{
           if (data) {
             this.newMessage = '';
-            this.chats.push(parseChat(data));
+            // Chat is comming from sockets, so if I
+            // uncomment the folloing line, the message will be duplicated
+            // this.chats.push(parseChat(data));
           } else {
             this.errormsg = "Invalid data format";
           }
@@ -156,7 +181,7 @@ export class HomeComponent implements OnInit{
         (data: any)=>{
           if (data){
             this.channelsArray = this.channelsArray.filter((channel: Channels) => channel._id !== this.channelIdSelected);
-
+            this.channelIdSelected = '';
           } else {
             this.errormsg = "Invalid data format";
           }
@@ -202,8 +227,9 @@ export class HomeComponent implements OnInit{
   initSockets(channelsData:Channels[]){
     for (let {_id} of channelsData ){
       // Listen for messages from the server
+      console.log("subscribing to socket: ", _id);
       this.socket.fromEvent(_id).subscribe((data:any) => {
-        // this.messageFromServer += data + "<br>";
+        console.log("received from socket");
         if(this.channelIdSelected === _id){
 
           this.chats.push(data);
