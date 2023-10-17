@@ -4,6 +4,7 @@ import { AuthService } from '../../service/auth.service';
 import {User} from "../../user";
 import {Router} from "@angular/router";
 import { FormsModule } from '@angular/forms';
+import { parseUser } from 'src/app/helpers/user-helper';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit{
           
           if (data.login == true){
             this.newuser = new User(
-              data.id,
+              data._id,
               data.username,
               data.email,
               data.login,
@@ -54,14 +55,30 @@ export class LoginComponent implements OnInit{
             this.errormsg = "There is a problem with the credentials";
           }
       
-      error:
-        this.errormsg = "There is a problem with the credentials";
-      
-    }
+          
+        },
+      error: () => this.errormsg = "There is a problem with the credentials"
       
    
   })
 
   }
 
+  signup(event:any){
+    console.log("at signup");
+    event.preventDefault();
+    this.authService.createNewUser(this.username,this.pwd).subscribe({
+      next:
+        (data: User)=>{
+          this.newuser = parseUser({...data, login: true});
+          this.authService.setCurrentuser(this.newuser);
+          this.router.navigate(['/home']);      
+        },
+      error: (data: any) => {
+        console.log(data);
+        this.errormsg = data?.error?.message || 'Unknown error';
+      }
+  })
+
+  }
 }

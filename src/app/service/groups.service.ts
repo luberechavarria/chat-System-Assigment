@@ -3,7 +3,8 @@ import { HttpClientModule,HttpClient } from '@angular/common/http';
 import {Router} from '@angular/router';
 import {of,tap} from 'rxjs';
 import {Groups} from '../groups';
-import {User} from "../user";
+import { parseUser } from "../helpers/user-helper";
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -12,7 +13,11 @@ import {User} from "../user";
 export class GroupsService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  
+  private authService = inject(AuthService);
+
+  private loggedInUser = JSON.parse(this.authService.getCurrentuser() || '{}');  ;
+  private currentUser = parseUser(this.loggedInUser);
+
   isLoggedin(){
     if (sessionStorage.getItem('currentUser')){
       return true;
@@ -22,23 +27,27 @@ export class GroupsService {
   }
 
 
-  getGroups(user:any){
-    return this.http.get<Groups>('http://localhost:3000/api/getGroups', user);
+  getAllGroups(){
+    return this.http.get<Groups>(`http://localhost:3000/api/getAllGroups`);
   }
 
-  createGroup(user:any, newGroupName:string){
-    return this.http.post<Groups>('http://localhost:3000/api/createGroup', {user: user, newGroupName: newGroupName});
+  getMyGroups(){
+    return this.http.get<Groups>(`http://localhost:3000/api/getMyGroups?token=${this.currentUser._id}`);
+  }
+
+  createGroup(newGroupName:string){
+    return this.http.post<Groups>(`http://localhost:3000/api/createGroup?token=${this.currentUser._id}`, {name: newGroupName});
   }
   
   addExistedUserToGroup(user:any, userAddToGroupEmail: string, groupname:string){
     return this.http.post<Groups>('http://localhost:3000/api/addExistedUserToGroup', {user: user, userAddToGroupEmail, groupname});
   }
 
-  removeGroup(user:any, groupname:string){
-    return this.http.post<Groups>('http://localhost:3000/api/removeGroup', {user: user, groupname});
+  removeGroup(groupId: string){
+    return this.http.delete<Groups>(`http://localhost:3000/api/removeGroup/${groupId}?token=${this.currentUser._id}`);
   }
 
-  removeUserFromGroup(user:any, removeUserInGroupEmail:string, groupIdSelected:number){
+  removeUserFromGroup(user:any, removeUserInGroupEmail:string, groupIdSelected:string){
     return this.http.post<any>('http://localhost:3000/api/removeUserFromGroup', {user: user, removeUserInGroupEmail, groupIdSelected});
   }
 

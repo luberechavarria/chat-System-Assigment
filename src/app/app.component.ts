@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { AuthService } from './service/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
+import { User } from './user';
 
 @Component({
   selector: 'app-root',
@@ -20,16 +21,22 @@ export class AppComponent {
   private location = inject(Location);
   // private routerLink = inject(RouterLink);
 
-  items: string[] = ['home', 'account', 'login', 'logoutString'];
+  items: string[] = ['home', 'groups','users', 'login', 'logoutString'];
   activeItem: string | null = null;
   home: boolean = false;
-  account: boolean = false;
+  groups: boolean = false;
   login: boolean = false;
   profile: boolean = false;
+  users: boolean = false;
 
+  get currentuser(): any {
+    return this.authServices.getCurrentuser();
+  }
  
 
-  isLoggedin: boolean = this.authServices.isLoggedin();
+  get isLoggedin(): boolean {
+    return this.authServices.isLoggedin();
+  }
 
   ngOnInit() {
     const url = this.location.path();
@@ -38,11 +45,14 @@ export class AppComponent {
       this.home = true;
     }
 
-    if (url === '/account') {
-      this.account = true;
+    if (url === '/groups') {
+      this.groups = true;
     }
     if (url === '/profile') {
       this.profile = true;
+    }
+    if (url === '/users') {
+      this.users = true;
     }
    
   }

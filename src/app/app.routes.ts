@@ -25,9 +25,9 @@ export const routes: Routes = [
   },
 
   {
-    path: 'account',
+    path: 'groups',
     canActivate: [authGuard],
-    loadComponent: () => import('./components/account/account.component').then(mod => mod.AccountComponent)
+    loadComponent: () => import('./components/group-list/group-list.component').then(mod => mod.GroupListComponent)
   },
 
   {
@@ -36,6 +36,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/profile/profile.component').then(
         (mod) => mod.ProfileComponent
+      ),
+  },
+  {
+    path: 'users',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./components/user-list/user-list.component').then(
+        (mod) => mod.UserListComponent
       ),
   },
 ];

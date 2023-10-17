@@ -23,6 +23,10 @@ export class AuthService {
     return this.http.post<User>('http://localhost:3000/api/login', { username, password: pwd});
   }
 
+  createNewUser(username:string,pwd:string){
+    return this.http.post<User>('http://localhost:3000/api/createNewUser', { username, password: pwd});
+  }
+
   logout(event:any){
     sessionStorage.removeItem('currentUser');
     this.router.navigateByUrl('');

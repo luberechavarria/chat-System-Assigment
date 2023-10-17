@@ -1,0 +1,13 @@
+.permissions-container {
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    font-size: 48px; /* Adjust the size as needed */
+    cursor: pointer;
+    z-index: 1; /* Ensure it's above the content */
+  }
+  

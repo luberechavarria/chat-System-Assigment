@@ -73,7 +73,9 @@ body {
 }
 
 .card-body-size {
-  height: 900px;
+  height: 500px;
+  position: relative;
+  overflow: auto;
 }
 
 .groupsButton {
@@ -121,10 +123,13 @@ body {
   background: white;
 }
 
+.chat-timestamp {
+  font-size: 12px;
+  color: gray;
+  padding-left: 10px;
+  float: right;
+}
 
-
-
-
-
-
-
+.chat-owner {
+  color:#484494;
+}

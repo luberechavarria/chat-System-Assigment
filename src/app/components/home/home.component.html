@@ -3,18 +3,16 @@
     <!-- <h2 class="group-h2" (click)="fetchGroups()">Groups</h2> -->
     <h2 class="group-h2" >Groups</h2>
     <ul class="group-li" *ngFor="let group of groupsArray">
-      <!-- <li><button class="groupsButton groupNotSelected" (click)="fetchChannels(group.id)">{{ group.name }}</button></li> -->
+      <!-- <li><button class="groupsButton groupNotSelected" (click)="fetchChannels(group._id)">{{ group.name }}</button></li> -->
       <div class="group-flex">
-        <li><button [ngClass]="{'white': group.id === groupIdSelected}" class="groupsButton" (click)="fetchChannels(group.id)">{{ group.name }}</button></li>
-        <select id="fruitSelect" class="selectClass">
+        <li><button [ngClass]="{'white': group._id == groupIdSelected}" class="groupsButton" (click)="fetchChannels(group._id)">{{ group.name }}</button></li>
+        <!-- <select id="fruitSelect" class="selectClass">
           <option  value="apple"></option>
           <option [value]="group.name">
             <button >Remove group</button>
           </option>
-        </select>
+        </select> -->
       </div>
-   
-
     <!-- <p>You selected: <span id="selectedFruit"></span></p> -->
 
     </ul>
@@ -32,96 +30,12 @@
     <button class="styleButton" (click)="showCreateGroupBtn()" id="bt">Create group</button>
     <!-- createGroup end-->
 
-    <!-- Promote user to Admin start-->
-    <ng-container *ngIf="show1">
-      <form (submit)="promoteUserToAdmin($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">promote User To Admin</label>
-          <input type="text" [(ngModel)]="promoteUserAsAdmin"  name="promoteUserAsAdmin" class="form-control" id="promoteUserAsAdmin"  placeholder="Email user">
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showPromoteUserAdminBtn()" id="bt">Promote user to  Admin</button>
-    <!-- Promote user to Admin end-->
-
-    <!-- Remove user chat start-->
-    <ng-container *ngIf="show2">
-      <form (submit)="removeUser($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">remove User</label>
-          <input type="text" [(ngModel)]="removeUserEmail"  name="removeUserEmail" class="form-control" id="deleteChatUser"  placeholder="Email user">
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showRemoveUser()" id="bt">Remove User</button>
-    <!-- Remove user chat end-->
-
-     <!-- Create new user start-->
-     <ng-container *ngIf="show3">
-      <form (submit)="createNewUser($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Create new user</label>
-          <input type="text" [(ngModel)]="createNewUserEmail"  name="createNewUserEmail" class="form-control" id="createNewUser"  placeholder="Email user">
-          <input type="text" [(ngModel)]="username"  name="username" class="form-control spaceTop" id="createNewUser"  placeholder="username">
-          <input type="text" [(ngModel)]="password"  name="password" class="form-control spaceTop" id="createNewUser"  placeholder="password">
-
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showCreateNewUserBtn()" id="bt">Create new User</button>
-    <!-- Create new user chat end-->
-
-    <!-- AddExistedUserToGroup start-->
-    <ng-container *ngIf="show4">
-      <form (submit)="addExistedUserToGroup($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Add user to Group</label>
-          <input type="text" [(ngModel)]="userAddToGroupEmail"  name="userAddToGroupEmail" class="form-control spaceTop" id="userAddToGroupEmail"  placeholder="Email user">
-          <input type="text" [(ngModel)]="groupname"  name="groupname" class="form-control spaceTop" id="groupname"  placeholder="groupname">
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showAddUserToGroupBtn()" id="bt">Add user to Group</button>
-    <!-- AddExistedUserToGroup end-->
-
- 
-
-    <!-- removeGroup start-->
-    <ng-container *ngIf="show6">
-      <form (submit)="removeGroup($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Remove group</label>
-          <input type="text" [(ngModel)]="removeGroupName"  name="removeGroupName" class="form-control" id="removeGroup"  placeholder="Remove group name">
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showRemoveGroup()" id="bt">Remove Group</button>
-    <!-- removeGroup end-->
-
-    <!-- remove user from group start-->
-    <ng-container *ngIf="show7">
-      <form (submit)="removeUserFromGroup($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Remove user from group</label>
-          <input type="text" [(ngModel)]="removeUserInGroupEmail"  name="removeUserInGroupEmail" class="form-control" id="removeUserFromGroup"  placeholder="User Email">
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showRemoveUserFromGroup()" id="bt">Remove user from Group</button>
-    <!-- remove user from group end-->
-
   </div>
 
   <div class="channel-list">
     <h2 class="channel-h2">Channels</h2>
     <ul class="channel-li" *ngFor="let channel of channelsArray">
-      <li><button [ngClass]="{'white': channel.id === channelIdSelected}" class="groupsButton" (click)="fetchUsersChannel(channel.id)">{{ channel.name }}</button></li>
+      <li><button [ngClass]="{'white': channel._id === channelIdSelected}" class="groupsButton" (click)="fetchChats(channel)">{{ channel.name }}</button></li>
       <!-- Add more channels here -->
     </ul>
 
@@ -135,73 +49,47 @@
         <button type="submit" class="btn btn-primary spaceTop">Submit</button>
       </form>
     </ng-container>
-    <button class="styleButton" (click)="showAddChannelToGroupBtn()" id="bt">Add channel to Group</button>
+    <button *ngIf="groupIdSelected" class="styleButton" (click)="showAddChannelToGroupBtn()" id="bt">Add channel to Group</button>
     <!-- addChannelToGroup end-->
 
-    <!-- remove channel from group start-->
-    <ng-container *ngIf="show9">
-      <form (submit)="removeChannel($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Remove channel from group</label>
-          <input type="text" [(ngModel)]="removeChannelName"  name="removeChannelName" class="form-control spaceTop" id="removeChannelName"  placeholder="Channel name">
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showRemoveChannel()" id="bt">Remove channel</button>
+    <button *ngIf="groupIdSelected && channelIdSelected" class="styleButton" (click)="removeChannel()" id="bt">Remove channel</button>
     <!-- addChannelToGroup end-->
-
-    <!-- remove user from channel start-->
-    <ng-container *ngIf="show8">
-      <form (submit)="removeUserFromChannel($event)">
-        <div class="form-group">
-          <label class="white" for="exampleInputEmail1">Remove user from channel</label>
-          <input type="text" [(ngModel)]="removeUserInChannelEmail"  name="removeUserInChannelEmail" class="form-control" id="removeUserFromChannel"  placeholder="User Email">
-        </div>
-        <button type="submit" class="btn btn-primary spaceTop">Submit</button>
-      </form>
-    </ng-container>
-    <button class="styleButton" (click)="showRemoveUserFromChannel()" id="bt">Remove user from Channel</button>
-    <!-- remove user from channel end-->
-  </div>
-
-  <!-- <div class="user-list">
-    <h2 class="channel-group">Global users</h2>
-    <ul *ngFor="let usersChannel of arrayUsersChannels">
-      <li><button [ngClass]="{'white': usersChannel.id === userIdSelected}" class="userBtn" (click)="highLightChannelUsers(usersChannel.id)">{{ usersChannel.username }}</button></li>
-    </ul>
-  </div> -->
-
-  <div class="user-list">
-    <h2 class="channel-group">Channel users</h2>
-    <ul *ngFor="let usersChannel of arrayUsersChannels">
-      <li><button [ngClass]="{'white': usersChannel.id === userIdSelected}" class="userBtn" (click)="highLightChannelUsers(usersChannel.id)">{{ usersChannel.username }}</button></li>
-      <!-- Add more users here -->
-    </ul>
   </div>
 
   <div class="chat-box">
     <div class="container">
       <div class="row justify-content-center">
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header">
-                      <h1 class="text-center">Welcome to Our Chat</h1>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h1 class="text-center">Welcome to Our Chat</h1>
+            </div>
+            <div class="card-body card-body-size" id="chat-content">
+              <!-- Chat messages will be displayed here -->
+              <ul class="list-group">
+                <li class="list-group-item chat-item" *ngFor="let chat of chats">
+                  <div class="chat-header">
+                    <strong 
+                      [class.chat-owner]="chat.userId === currentuser._id"
+                    >{{ chat.userId === currentuser._id ? 'You' : chat.username }}:</strong>
+                    <span class="chat-timestamp">{{ chat.createdAt }}</span>
                   </div>
-                  <div class="card-body card-body-size" id="chat-content">
-                    <!-- Chat messages will be displayed here -->
-                    
+                  <div class="chat-message">
+                    {{ chat.message }}
                   </div>
-                  <div class="card-footer">
-                      <div class="input-group">
-                          <input type="text" class="form-control" id="user-message" placeholder="Type your message...">
-                          <button class="btn btn-primary" id="send-button">Send</button>
-                      </div>
-                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <div class="input-group">
+                <input [disabled]="!channelIdSelected" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" type="text" class="form-control" id="user-message" placeholder="Type your message...">
+                <button [disabled]="!channelIdSelected" class="btn btn-primary" id="send-button" (click)="sendMessage()">Send</button>
               </div>
+            </div>
           </div>
+        </div>
       </div>
     </div>
-  </div>
+  </div>  
 </div>
 

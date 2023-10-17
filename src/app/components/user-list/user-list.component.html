@@ -1,0 +1,53 @@
+<div class="container">
+    <h1>User Management</h1>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Roles</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.username }}</td>
+          <td>
+            <select class="form-control" [(ngModel)]="user.roles[0]" #roleSelect (change)="updateUserRole(user, roleSelect.value)">
+              <option value="superAdmin">Super Admin</option>
+              <option value="groupAdmin">Group Admin</option>
+              <option value="user">User</option>
+            </select>
+          </td>
+          <td class="d-flex">
+            <button class="btn btn-danger mx-2" (click)="removeUser(user)">Remove</button>
+            <button *ngIf="user.roles[0] === 'groupAdmin'" class="btn btn-primary mx-2" (click)="toggleGroupPermissions(user)">Edit Group Permissions</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Group Permissions Table (Initially Hidden) -->
+    <div *ngIf="showGroupPermissions" class="permissions-container">
+        <div class="close-button" (click)="closeGroupPermissions()">&times;</div>
+        <h2>Edit Group Permissions for {{ selectedUser.username }}</h2>
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th>Group Name</th>
+            <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let group of groups">
+            <td>{{ group.name }}</td>
+            <td>
+                <button *ngIf="!selectedUser.groups.includes(group._id)" class="btn btn-success mr-2" (click)="addGroupToSelectedUser(selectedUser, group._id)">Add</button>
+                <button *ngIf="selectedUser.groups.includes(group._id)" class="btn btn-danger" (click)="removeUserFromGroup(selectedUser, group._id)">Remove</button>
+            </td>
+            </tr>
+        </tbody>
+        </table>
+    </div> 
+  
+  </div>
+  

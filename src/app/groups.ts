@@ -1,6 +1,8 @@
 export class Groups {
   constructor(
-    public id: string = '',
+    public _id: string = '',
     public name: string = '',
+    public userAdmins: string[] = [],
+    public joinRequesters: string[] = [],
   ) {}
 }
