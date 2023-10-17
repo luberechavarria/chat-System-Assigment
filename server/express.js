@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+
 try{
   mongoUtil.connectToServer().then(db => {
      require('./routes/channels.js')(app, db);
@@ -22,7 +23,18 @@ try{
   
 
     const server = http.createServer(app);
-  
+
+    const io = require("socket.io")(server, {
+      cors: {
+        origin: "http://localhost:4200",
+        methods: ["GET", "POST"]
+      }
+    });
+  /**
+    * Set socket io object to be accesible via req parameter
+ */
+  // const io  = require('socket.io').listen(server);
+   app.set("io", io);  
   
   
     server.listen(3000, function(){

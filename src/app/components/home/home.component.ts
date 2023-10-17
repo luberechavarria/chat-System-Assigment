@@ -13,6 +13,8 @@ import {Chat} from "../../chat";
 import {User} from "../../user";
 import { AuthService } from '../../service/auth.service';
 import { parseChat } from 'src/app/helpers/chat-helper';
+import { io } from 'socket.io-client';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-home',
@@ -68,7 +70,8 @@ export class HomeComponent implements OnInit{
   private usersService = inject(UsersService);
   private chatService = inject(ChatService);
   private authService = inject(AuthService);
-
+  // private socket = inject(Socket);
+  constructor(private socket: Socket) {}
 
   // chat
   newMessage: string = '';
@@ -196,6 +199,21 @@ export class HomeComponent implements OnInit{
     })
   } 
 
+  initSockets(channelsData:Channels[]){
+    for (let {_id} of channelsData ){
+      // Listen for messages from the server
+      this.socket.fromEvent(_id).subscribe((data:any) => {
+        // this.messageFromServer += data + "<br>";
+        if(this.channelIdSelected === _id){
+
+          this.chats.push(data);
+          console.log('Received message from server:', data);
+        }
+      });
+    }
+  }
+
+
   fetchChannels(groupId: string){
     console.log("at get fetchChannels, before request");
     this.groupIdSelected = groupId;
@@ -204,6 +222,7 @@ export class HomeComponent implements OnInit{
         (data: any)=>{
           if (Array.isArray(data)) {
             this.channelsArray = data.map((channelData: any) => new Channels(channelData._id, channelData.name));
+            this.initSockets(this.channelsArray);
           } else {
             this.errormsg = "Invalid data format";
           }
