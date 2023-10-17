@@ -1,8 +1,14 @@
 const userService =  require("../services/users");
 const channelService =  require("../services/channels");
 
-
-
+/**
+ * Retrieves a list of channels associated with a group based on its unique groupId.
+ *
+ * @async
+ * @param {string} groupId - The unique identifier of the group for which associated channels are to be retrieved.
+ * @returns {Promise<Array<Object>} A promise that resolves to an array of channel objects associated with the group.
+ * @throws {Error} An error object is thrown if an exception occurs during the channel retrieval process.
+ */
 const getChannelsByGroupId = async(groupId) => { //WORKING MONGO
   try{
     const result = await channelService.getChannelsByGroupId(groupId);
@@ -14,6 +20,14 @@ const getChannelsByGroupId = async(groupId) => { //WORKING MONGO
   }
 }
 
+/**
+ * Adds a new channel to a group using the provided channel data.
+ *
+ * @async
+ * @param {Object} newChannel - The channel data to be used for creating the new channel.
+ * @returns {Promise<Object>} A promise that resolves to the newly created channel object.
+ * @throws {Error} An error object is thrown if an exception occurs during the channel creation process.
+ */
 const addChannelToGroup = async(newChannel) => {
   try{ 
     const result = await channelService.createChannel(newChannel);
@@ -24,6 +38,15 @@ const addChannelToGroup = async(newChannel) => {
   }
 }
 
+/**
+ * Removes a user from a channel based on their email, with role-based access control.
+ *
+ * @async
+ * @param {Object} group - The group object representing the channel from which the user should be removed.
+ * @param {MongoDBDatabase} db - The MongoDB database instance.
+ * @returns {Promise<Array<Object>|Object|string>} A promise that resolves to an array of user objects in the updated channel, an error object with a status and message, or a string message indicating permission restrictions.
+ * @throws {Error} An error object is thrown if an exception occurs during the user removal process.
+ */
 const removeUserFromChannel = async(group, db) => {
   try{ 
     if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
@@ -55,6 +78,14 @@ const removeUserFromChannel = async(group, db) => {
   }
 }
 
+/**
+ * Removes a channel from the system using its unique channelId.
+ *
+ * @async
+ * @param {string} channelId - The unique identifier of the channel to be removed from the system.
+ * @returns {Promise<Object>} A promise that resolves to the result of the channel removal operation.
+ * @throws {Error} An error object is thrown if an exception occurs during the channel removal process.
+ */
 const removeChannel = async(channelId) => {
   try{
     const result = await channelService.removeChannel(channelId);

@@ -51,6 +51,14 @@ const getChannelById = async(channelId) => {//WORKING MONGO
   }
 }
 
+/**
+ * Retrieves a list of channels associated with a group based on its unique groupId.
+ *
+ * @async
+ * @param {string} groupId - The unique identifier of the group for which associated channels are to be retrieved.
+ * @returns {Promise<Array<Object>} A promise that resolves to an array of channel objects associated with the group.
+ * @throws {Error} An error object is thrown if an exception occurs during the channel retrieval process.
+ */
 const getChannelsByGroupId = async(groupId) => {//WORKING MONGO
   try{
     const result = await channels.find({ groupId: new ObjectId(groupId) }).sort({name: 1}).toArray();

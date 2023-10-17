@@ -1,3 +1,313 @@
+
+Phase 2
+                                            3813ICT - Assignment
+
+The development approach for this project has been found on the branch Master, and there was a deliberate choice to keep working multiple branches safety in case anything happens to the repo. This was deemed necessary to prevent unnecessary complications that could further burden an already intricate interface.
+The project's file structure is categorized into three main sections: Angular, REST API, and the MongoDB database. These components are organized in the Git repository as "Assignment-Angular," "server/RestAPI," and "server/MongoDB," respectively. This separation was done to enable each component to function independently as a service, enhancing intuitiveness and overall cohesion.
+Due to the project's exigency and unexpected life obstacles, the number of commits illustrating the progress of phase 2 is notably limited. The time constraints made it impractical to save the state of each working feature individually. In this rushed development phase, several features were concurrently under development, resulting in each push including elements in an unfinished state.
+GitHub was chosen as the version control platform primarily because of extensive experience with it, both academically and professionally. Its user-friendly interface and intuitive design instilled confidence in the selection of this platform.
+
+                                     Rest API
+Users Route: Login
+Method: Post
+Route: ‘api/login’
+Porpouse: This route serves to verify a user's identity during the web application login process.
+
+Controller jdoc for login:
+ /**
+* Authenticates a user by verifying the provided username and password.
+*
+* @async
+* @param {string} username - The username of the user to authenticate.
+* @param {string} password - The password associated with the username.
+* @returns {Promise<Object|null>} A promise that resolves to the authenticated user object if successful, or null if authentication fails.
+* @throws {Error} An error object is thrown if an exception occurs during the authentication process.
+*/
+
+Users Route: get user for channel
+Method: Get
+Route: ‘api/getUserFromChannel/:channelId’
+Porpouse: This route serves to bring all users belonging to this channel.
+
+Controller jdoc for get user belongs to the specific channel:
+/**
+* Retrieves a list of users associated with a specific channel by its unique channelId.
+*
+* @async
+* @param {string} channelId - The unique identifier of the channel for which users are being retrieved.
+* @returns {Promise<Array<Object>>} A promise that resolves to an array of user objects associated with the specified channel.
+* @throws {Error} An error object is thrown if an exception occurs during the retrieval process.
+*/
+Users Route: update role for user.
+Method: Put
+Route: ‘api/lupDateRole/:id’
+Porpouse: This route serves is in charge of changing the state role of users.
+
+Controller jdoc for upDate user roles:
+/**
+* Updates the role of a user identified by their unique userId.
+*
+* @async
+* @param {string} userId - The unique identifier of the user whose role is to be updated.
+* @param {string} newRole - The new role to assign to the user.
+* @returns {Promise<Object>} A promise that resolves to the result of the role update operation.
+* @throws {Error} An error object is thrown if an exception occurs during the role update process.
+*/
+
+Users Route: remove user user.
+Method: Delete
+Route: ‘api/removeUser/:id’
+Porpouse: This route serves is in charge of removing users for the application.
+
+Controller jdoc for upDate user roles:
+/**
+* Removes a user from the system using their unique userId.
+*
+* @async
+* @param {string} userId - The unique identifier of the user to be removed from the system.
+* @returns {Promise<Object>} A promise that resolves to the result of the user removal operation.
+* @throws {Error} An error object is thrown if an exception occurs during the user removal process.
+*/
+
+Users Route: create new user.
+Method: Post
+Route: ‘api/createNewUser’
+Porpouse: This route serves is in charge of creating a new user for the app.
+
+Controller jdoc for creating new user:
+/**
+* Creates a new user with the provided user data or checks if a user with the same username already exists.
+*
+* @async
+* @param {Object} newUser - The user data used for creating the new user.
+* @property {string} username - The username of the new user.
+* @property {string} password - The password of the new user.
+* @returns {Promise<Object|{userExists: true}>} A promise that resolves to the newly created user object if successful or an object with `{userExists: true}` if a user with the same username already exists.
+* @throws {Error} An error object is thrown if an exception occurs during user creation or when checking for user existence.
+* */
+
+Users Route: add a user to a group.
+Method: Put
+Route: ‘api/addExistedUserToGroup/:id’
+Porpouse: This route serves is in charge of creating and adding a user to a group by Admin.
+
+Controller jdoc for creating new user:
+/**
+* Adds a user to a specified group identified by their unique userId and groupId.
+*
+* @async
+* @param {string} userId - The unique identifier of the user to be added to the group.
+* @param {string} groupId - The unique identifier of the group to which the user will be added.
+* @returns {Promise<Object>} A promise that resolves to the result of the user addition to the group operation.
+* @throws {Error} An error object is thrown if an exception occurs during the user addition process.
+*/
+
+Users Route: remove user from group.
+Method: Put
+Route: ‘api/removeUserFromGroupr’
+Porpouse: This route server is in charge of removing group from group.
+
+Controller jdoc for removing the user from group:
+/**
+* Removes a user from a specified group identified by their unique userId and groupId.
+*
+* @async
+* @param {string} userId - The unique identifier of the user to be removed from the group.
+* @param {string} groupId - The unique identifier of the group from which the user will be removed.
+* @returns {Promise<Object>} A promise that resolves to the result of the user removal from the group operation.
+* @throws {Error} An error object is thrown if an exception occurs during the user removal process.
+*/
+
+Users Route: get single user by id.
+Method: Get
+Route: ‘api/user/:id’
+Porpouse: This route server is in charge of getting single user by id.
+
+Controller jdoc for getting single user by id:
+/**
+* Retrieves a user's information based on their unique userId.
+*
+* @async
+* @param {string} userId - The unique identifier of the user to be retrieved.
+* @returns {Promise<Object>} A promise that resolves to the user object with the specified userId.
+* @throws {Error} An error object is thrown if an exception occurs during the user retrieval process.
+*/
+
+Users Route: get all users depending on the role.
+Method: Get
+Route: ‘api/getAllUsers/:id’
+Porpouse: This route server is in charge of getting all users.
+
+Controller jdoc for getting all users:
+/**
+* Retrieves a list of users based on the role of the specified user identified by their unique userId.
+*
+* @async
+* @param {string} userId - The unique identifier of the user whose role is used to filter other users.
+* @returns {Promise<Array<Object>>} A promise that resolves to an array of user objects based on the user's role.
+* @throws {Error} An error object is thrown if an exception occurs during the user retrieval process.
+*/
+
+Groups Route: get all groups.
+Method: Get
+Route: ‘api/getAllGroups’
+Porpouse: This route server is in charge of getting all groups.
+
+Controller jdoc for getting all groups:
+/**
+* Retrieves a list of all groups from the database.
+*
+* @async
+* @returns {Promise<Array<Object>>} A promise that resolves to an array of all group objects in the database.
+* @throws {Error} An error object is thrown if an exception occurs during the retrieval process.
+*/
+
+Groups Route: get my groups.
+Method: Get
+Route: ‘api/getMyGroups’
+Porpouse: This route server is in charge of getting my own groups where I belong.
+
+Controller jdoc for getting all my groups:
+/**
+* Retrieves a list of groups associated with a user based on their unique userId.
+*
+* @async
+* @param {string} userId - The unique identifier of the user for whom associated groups are to be retrieved.
+* @returns {Promise<Array<Object>>} A promise that resolves to an array of group objects associated with the user.
+* @throws {Error} An error object is thrown if an exception occurs during the group retrieval process.
+*/
+
+Groups Route: create a group.
+Method: Post
+Route: ‘api/createGroup’
+Porpouse: This route server is in charge of creating a group.
+
+Controller jdoc for creating a group:
+/**
+* Creates a new group with the provided group data.
+*
+* @async
+* @param {Object} newGroup - The group data to be used for creating the new group.
+* @returns {Promise<Object>} A promise that resolves to the newly created group object.
+* @throws {Error} An error object is thrown if an exception occurs during the group creation process.
+*/
+
+Groups Route: remove group.
+Method: Post
+Route: ‘api/removeGroup/:id’
+Porpouse: This route server is in charge of removing a group using id.
+
+Controller jdoc for removing a group:
+/**
+* Removes a group from the database based on its unique groupId.
+*
+* @async
+* @param {string} groupId - The unique identifier of the group to be removed.
+* @returns {Promise<Object>} A promise that resolves to the result of the group removal operation.
+* @throws {Error} An error object is thrown if an exception occurs during the group removal process.
+*/
+
+Channels Route: get all channels.
+Method: Post
+Route: ‘api/getChennel/:groupId’
+Porpouse: This route server is in charge of getting a channel fro a group, using groupId.
+
+Controller jdoc for getting channels:
+/**
+* Retrieves a list of channels associated with a group based on its unique groupId.
+*
+* @async
+* @param {string} groupId - The unique identifier of the group for which associated channels are to be retrieved.
+* @returns {Promise<Array<Object>} A promise that resolves to an array of channel objects associated with the group.
+* @throws {Error} An error object is thrown if an exception occurs during the channel retrieval process.
+*/
+
+Channels Route: get the channel to a group.
+Method: Post
+Route: ‘api/addChannelToGroup’
+Porpouse: This route server is in charge of adding channel to group.
+
+Controller jdoc for adding a channel to a group:
+/**
+* Adds a new channel to a group using the provided channel data.
+*
+* @async
+* @param {Object} newChannel - The channel data to be used for creating the new channel.
+* @returns {Promise<Object>} A promise that resolves to the newly created channel object.
+* @throws {Error} An error object is thrown if an exception occurs during the channel creation process.
+*/
+
+Channels Route: remove a user from the channel.
+Method: Get
+Route: ‘api/removeUserFromChannel’
+Porpouse: This route server is in charge of removing user from the channel..
+
+Controller jdoc for removing user from channel:
+/**
+* Removes a user from a channel based on their email, with role-based access control.
+*
+* @async
+* @param {Object} group - The group object representing the channel from which the user should be removed.
+* @param {MongoDBDatabase} db - The MongoDB database instance.
+* @returns {Promise<Array<Object>|Object|string>} A promise that resolves to an array of user objects in the updated channel, an error object with a status and message, or a string message indicating permission restrictions.
+* @throws {Error} An error object is thrown if an exception occurs during the user removal process.
+*/
+
+Channels Route: remove channel.
+Method: Delete
+Route: ‘api/removeChannel’
+Porpouse: This route server is in charge of removing channel.
+
+Controller jdoc for removing channel:
+/**
+* Removes a channel from the system using its unique channelId.
+*
+* @async
+* @param {string} channelId - The unique identifier of the channel to be removed from the system.
+* @returns {Promise<Object>} A promise that resolves to the result of the channel removal operation.
+* @throws {Error} An error object is thrown if an exception occurs during the channel removal process.
+*/
+
+Chats Route: send message.
+Method: Post
+Route: ‘api/sendMessage
+Porpouse: This route server is in charge sending messages.
+
+Controller jdoc for sending message:
+/**
+* Sends a message in a chat room and broadcasts it over a WebSocket connection if provided.
+*
+* @async
+* @param {Object} newChat - The message data to be sent in the chat.
+* @param {SocketIO} io - The Socket.IO instance for broadcasting messages to connected clients (optional).
+* @returns {Promise<Object>} A promise that resolves to the result of the message creation.
+* @throws {Error} An error object is thrown if an exception occurs during the message sending process.
+*/
+
+Chats Route: get chat by channel id.
+Method: Post
+Route: ‘api/getChayByChannelId’
+Porpouse: This route server is in charge of sending messages.
+
+Controller jdoc for getting chat by channel id:
+/**
+* Retrieves a list of chat messages associated with a specific channel based on its unique channelId.
+*
+* @async
+* @param {string} channelId - The unique identifier of the channel for which associated chat messages are to be retrieved.
+* @returns {Promise<Array<Object>>} A promise that resolves to an array of chat message objects associated with the channel.
+* @throws {Error} An error object is thrown if an exception occurs during the chat message retrieval process.
+*/
+
+
+                      Client distribution
+the client was created with new views to manage users and groups in it own page.
+
+
+
+
+
+
 # MyApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.8.
