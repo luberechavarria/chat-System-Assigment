@@ -1,7 +1,6 @@
 const userService =  require("../services/users");
 const channelsService =  require("../services/channels");
 
-
 const login = async(username, password) => {
   try {
     const userFound = await userService.getUserByUsernameAndPassword(username, password);
@@ -24,7 +23,7 @@ const getUsersFromChannel = async(channelId) => {//WORKING MONGO
   try{
     const channelClicked = await channelsService.getChannelById(channelId);
    
-    let channelUserIds = channelClicked.usersIdChannel;
+    let channelUserIds = channelClicked.usersIdChannel || [];
   
     let usersChannel = [];
 
@@ -40,33 +39,30 @@ const getUsersFromChannel = async(channelId) => {//WORKING MONGO
   }
 }
 
-const promoteUserAsAdmin = async(user, db) => {
+const updateRole = async(userId, newRole) => {
   try{
-    if ( req.body.user.roles.includes('superAdmin')){
-      // const userPromotedAsAdmin = userService.promoteUserAsAdmin(req.body.promoteUserEmail, req.body.groupIdSelected); // Call the getGroups function from the userService module
-      const userPromotedAsAdmin = await db.collection('products2').updateOne({name: product.name}, {$set:{description: product.description}}) 
-
-      return userPromotedAsAdmin;
-    }else{
-      return 'This user can not promote users to admin';
-    }
-      
+    const result = await userService.updateRole(userId, newRole)
+    return result;
   }catch(err){
     console.log(JSON.stringify(err, null, 2));
     throw err;
   }
 }
 
-const removeUser = async(user, db) => {
+const getUserById = async(userId) => {
   try{
-    if ( req.body.user.roles.includes('superAdmin')){
-      // const userWasRemoved = userService.removeUser(req.body.removeUserEmail);
-      const userWasRemoved = await db.collection('products2').deleteOne({name: name});
+    const result = await userService.getUserById(userId)
+    return result;
+  }catch(err){
+    console.log(JSON.stringify(err, null, 2));
+    throw err;
+  }
+}
 
-      return userWasRemoved;
-    }else{
-      return 'This user can not promote users to admin';
-    }
+const removeUser = async(userId) => {
+  try{
+    const result = await userService.removeUser(userId);
+    return result;
   }catch(err){
     console.log(JSON.stringify(err, null, 2));
     throw err;
@@ -75,10 +71,14 @@ const removeUser = async(user, db) => {
 
 const createNewUser = async(newUser) => {
   try{
+    const userExists = await userService.getUserByUsername(newUser.username);
+    if (userExists) {
+      return { userExists: true };
+    }
     const user = await userService.createNewUser(newUser);
     return user;
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
     throw err;
   }
 }
@@ -86,8 +86,8 @@ const createNewUser = async(newUser) => {
 const getUsersByRole = async (userId) => {
   const user = await userService.getUserById(userId);
   if (user) {
-    const isGroupAdmin = user.roles.includes('groupAdmin');
-    const isSuperAdmin = user.roles.includes('superAdmin');
+    const isGroupAdmin = user?.roles?.includes('groupAdmin');
+    const isSuperAdmin = user?.roles?.includes('superAdmin');
     if(isSuperAdmin){
       return await userService.getAllUsers();
     }else if(isGroupAdmin) { 
@@ -100,14 +100,37 @@ const getUsersByRole = async (userId) => {
 
 }
 
+const addUserToGroup = async(userId, groupId) => {
+  try{
+    const result = await userService.addUserToGroup(userId, groupId);
+    return result;
+  }catch(err){
+    console.log(err);
+    throw err;
+  }
+}
+
+const removeUserFromGroup = async(userId, groupId) => {
+  try{
+    const result = await userService.removeUserFromGroup(userId, groupId);
+    return result;
+  }catch(err){
+    console.log(err);
+    throw err;
+  }
+}
+
 
 module.exports = {
   login,
   getUsersFromChannel,
-  promoteUserAsAdmin,
+  updateRole,
   removeUser,
   createNewUser,
   getUsersByRole,
-  getUsersFromChannel
+  getUsersFromChannel,
+  addUserToGroup,
+  removeUserFromGroup,
+  getUserById
 };
 

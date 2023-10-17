@@ -21,51 +21,43 @@ const ObjectId = require('mongodb').ObjectId;
 const { v4: uuidv4 } = require('uuid');
 
 const controllerChannels = require("../controllers/channels");
+const accessValidations = require('../middlewares/accessValidations')
 
 const channels = function (app, db) {
 
-  app.post('/api/getChannels', async(req, res) => {
+  app.get('/api/getChannels/:groupId', async(req, res) => {
    
-    if (!req.body) {
+    if (!req.params || !req.params.groupId) {
       return res.sendStatus(400);
     }
 
-    // const group = {
-      // ...req.body,
-      // price: Decimal128.fromString(req.body.price),
-      // _id: Math.floor(Math.random() * 65536),
-    // }
-   
-    const groupI = req.body.groupId
-
-    console.log("chnnaels of group luber 11111", groupI);
-
     try{
-     const allChannels = await controllerChannels.getChannels(groupI, db);
+      const { groupId } = req.params;
+
+      const allChannels = await controllerChannels.getChannelsByGroupId(groupId);
     
       return res.status(200).send(allChannels);
     }catch(err){
-      console.log(JSON.stringify(err, null, 2));
+      console.log(err);
       return res.status(500).send({
         error: err,
       })
     }
   });
 
-  app.get('/api/addChannelToGroup', async(req, res) => {
+  app.post('/api/addChannelToGroup', accessValidations.hasAdminRights, async(req, res) => {
    
-    if (!req.body) {
+    if (!req.body || !req.body.name || !req.body.groupId) {
       return res.sendStatus(400);
     }
 
-    const channel = {
+    const newChannel = {
       ...req.body,
-      // price: Decimal128.fromString(req.body.price),
-      // _id: Math.floor(Math.random() * 65536),
+      groupId: new ObjectId(req.body.groupId)
     }
 
     try{
-     const groupUpdated = await controllerChannels.addChannelToGroup(channel, db);
+     const groupUpdated = await controllerChannels.addChannelToGroup(newChannel);
     
       return res.status(200).send(groupUpdated);
     }catch(err){
@@ -99,23 +91,20 @@ const channels = function (app, db) {
     }
   });
 
-  app.get('/api/removeChannel', async(req, res) => {
+  // TODO: validate permissions
+  app.delete('/api/removeChannel/:id', accessValidations.hasAdminRights, async(req, res) => {
    
-    if (!req.body) {
+    if (!req.params || !req.params.id) {
       return res.sendStatus(400);
     }
 
-    const channel = {
-      ...req.body,
-   
-    }
-
     try{
-     const groupUpdated = await controllerChannels.removeChannel(channel, db);
+      const channelId = req.params.id;
+      const groupUpdated = await controllerChannels.removeChannel(channelId);
     
       return res.status(200).send(groupUpdated);
     }catch(err){
-      console.log(JSON.stringify(err, null, 2));
+      console.log(err);
       return res.status(500).send({
         error: err,
       })

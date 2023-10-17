@@ -23,9 +23,11 @@ const ObjectId = require('mongodb').ObjectId;
 const { v4: uuidv4 } = require('uuid');
 
 const controllerGroups = require("../controllers/groups");
-const loginValidation = require('../middlewares/loginValidations')
+const usersController = require("../controllers/users");
 
-const groups = function (app, db) {
+const accessValidations = require('../middlewares/accessValidations')
+
+const groups = function (app) {
 
   app.get('/api/getAllGroups', async(req, res) => {
     
@@ -45,8 +47,14 @@ const groups = function (app, db) {
   app.get('/api/getMyGroups', async(req, res) => {
     
     try{
-     const allGroups = await controllerGroups.getAllGroups();
-    
+      const userId = req.query.token;
+      const user = await usersController.getUserById(userId);
+      let allGroups;
+      if( user?.roles?.includes('superAdmin')){
+        allGroups = await controllerGroups.getAllGroups();
+      } else {
+        allGroups = await controllerGroups.getGroupsByUserId(userId);
+      }
       return res.status(200).send(allGroups);
     }catch(err){
       console.log(err);
@@ -56,7 +64,7 @@ const groups = function (app, db) {
     }
   });
 
-  app.post('/api/createGroup', loginValidation.canCreateGroup, async(req, res) => {
+  app.post('/api/createGroup', accessValidations.hasAdminRights, async(req, res) => {
     if (!req.body || !req.body.name) {
       return res.sendStatus(400);
     }
@@ -79,68 +87,19 @@ const groups = function (app, db) {
     }
   });
 
-  app.get('/api/addExistedUserToGroup', async(req, res) => {
-   
-    if (!req.body) {
+  app.delete('/api/removeGroup/:id', accessValidations.hasAdminRights, async(req, res) => {
+    
+    if (!req.params || !req.params.id) {
       return res.sendStatus(400);
     }
 
-    const user = {
-      ...req.body,
-   
-    }
-
     try{
-     const groupUpdated = await controllerGroups.addExistedUserToGroup(user, db);
+      const groupId = req.params.id;
+      const result = await controllerGroups.removeGroup(groupId);
     
-      return res.status(200).send(groupUpdated);
+      return res.status(200).send(result);
     }catch(err){
       console.log(err);
-      return res.status(500).send({
-        error: err,
-      })
-    }
-  });
-
-  app.post('/api/removeGroup', async(req, res) => {
-    
-    if (!req.body) {
-      return res.sendStatus(400);
-    }
-
-    const group = {
-      name: req.body.groupname
-    }
-
-    try{
-     const groupUpdated = await controllerGroups.removeGroup(req.body.user, group, db);
-    
-      return res.status(200).send(groupUpdated);
-    }catch(err){
-      console.log(JSON.stringify(err, null, 2));
-      return res.status(500).send({
-        error: err,
-      })
-    }
-  });
-
-  app.get('/api/removeUserFromGroup', async(req, res) => {
-   
-    if (!req.body) {
-      return res.sendStatus(400);
-    }
-
-    const group = {
-      ...req.body,
-   
-    }
-
-    try{
-     const groupUpdated = await controllerGroups.removeUserFromGroup(group, db);
-    
-      return res.status(200).send(groupUpdated);
-    }catch(err){
-      console.log(JSON.stringify(err, null, 2));
       return res.status(500).send({
         error: err,
       })

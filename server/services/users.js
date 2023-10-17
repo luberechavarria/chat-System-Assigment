@@ -37,6 +37,7 @@ const createNewUser = async(newUser) => {
     const result = await users.insertOne(newUser);
     if (result.acknowledged) {
       newUser._id = result.insertedId;
+      return newUser;
     }
     return null;
   }catch(err){
@@ -47,21 +48,30 @@ const createNewUser = async(newUser) => {
 
 const getUserByUsernameAndPassword = async(username, password) => { 
   try{
-    const userFound = await users.findOne({ username, pwd: password });
-    delete userFound.pwd;
+    const userFound = await users.findOne({ username, pwd: password });    
     return userFound;
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
+    throw err;
+  }
+}
+
+const getUserByUsername = async(username) => { 
+  try{
+    const userFound = await users.findOne({ username });
+    return userFound;
+  }catch(err){
+    console.log(err);
     throw err;
   }
 }
 
 const removeUser = async(userId) => {
   try{
-    const userWasRemoved = await users.deleteOne({ _id: userId });
+    const userWasRemoved = await users.deleteOne({ _id: new ObjectId(userId) });
     return userWasRemoved;
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
     throw err;
   }
 }
@@ -69,10 +79,49 @@ const removeUser = async(userId) => {
 const updateUser = async(userId, data) => {
   try {
     const result = await users.updateOne(
-      { _id: userId },
+      { _id: new ObjectId(userId) },
       data
     );
     return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+const addUserToGroup = async(userId, groupId) => {
+  try {
+    const result = await users.updateOne(
+      { _id: new ObjectId(userId) },
+      { $addToSet: { groups: new ObjectId(groupId) } }
+   );
+   return result;
+  } catch (err) {
+    console.log(JSON.stringify(err, null, 2));
+    throw err;
+  }
+}
+
+const updateRole = async (userId, newRoles) => {
+  try {
+    const result = await users.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { roles: [newRoles] } }
+    );
+    return result;
+  } catch (err) {
+    console.log(JSON.stringify(err, null, 2));
+    throw err;
+  }
+};
+
+const removeUserFromGroup = async(userId, groupId) => {
+  try {
+    const result = await users.updateOne(
+      { _id: new ObjectId(userId) },
+      { $pull: { groups: new ObjectId(groupId) } }
+   );
+   return result;
   } catch (err) {
     console.log(JSON.stringify(err, null, 2));
     throw err;
@@ -85,5 +134,9 @@ module.exports = {
   createNewUser,
   removeUser,
   updateUser,
-  getUserByUsernameAndPassword
+  addUserToGroup,
+  updateRole,
+  removeUserFromGroup,
+  getUserByUsername,
+  getUserByUsernameAndPassword,
 };

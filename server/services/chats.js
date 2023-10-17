@@ -2,6 +2,7 @@ const mongoUtil = require("../mongoUtil");
 
 const db = mongoUtil.getDb();
 const chats = db.collection('chats');
+const ObjectId = require('mongodb').ObjectId;
 
 const createChat = async (newChat) => {
   try {
@@ -17,6 +18,20 @@ const createChat = async (newChat) => {
   }
 }
 
+const getChatsByChannelId = async(channelId) => {
+  try{
+    const result = await chats.find({
+      channelId: new ObjectId(channelId)
+    }).sort({ createadAt: -1 }).toArray();
+    return result;
+   
+  }catch(err){
+    console.log(err);
+    throw err;
+  }
+}
+
 module.exports = {
   createChat,
+  getChatsByChannelId,
 }

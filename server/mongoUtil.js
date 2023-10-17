@@ -1,6 +1,6 @@
 
 const { MongoClient } = require('mongodb');
-const url = "mongodb://localhost:27017";
+const url = "mongodb://127.0.0.1:27017";
 
 
 let _db;
@@ -11,7 +11,7 @@ const clientOptions = {
 };
 
 const poolSize = 10;
-const DATABASE_NAME = 'chatTesting2';
+const DATABASE_NAME = 'chatTesting3';
 module.exports = {
   connectToServer: async function () {
     try {

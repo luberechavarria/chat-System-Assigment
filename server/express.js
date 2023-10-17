@@ -18,7 +18,7 @@ try{
      require('./routes/channels.js')(app, db);
      require('./routes/groups.js')(app, db);
      require('./routes/users.js')(app, db);
-    //require('./routes/chats.js')(app, db);
+     require('./routes/chats.js')(app);
   
 
     const server = http.createServer(app);

@@ -1,7 +1,7 @@
 const userService = require("../services/users");
 
 const isAdmin = async (req, res, next) => {
-  const user = await userService.getUserById(req.params.id);
+  const user = await userService.getUserById(req.query.token);
   if( user.roles.includes('superAdmin')){
     next();
   }else{
@@ -9,7 +9,7 @@ const isAdmin = async (req, res, next) => {
   }
 }
 
-const canCreateGroup = async (req, res, next) => {
+const hasAdminRights = async (req, res, next) => {
   if (!req.query || !req.query.token) {
     return res.sendStatus(403);
   }
@@ -25,5 +25,5 @@ const canCreateGroup = async (req, res, next) => {
 
 module.exports = {
   isAdmin,
-  canCreateGroup
+  hasAdminRights
 };

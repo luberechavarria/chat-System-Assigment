@@ -33,7 +33,7 @@ const createChannel = async(newChannel) => {
 
 const removeChannel = async(channelId) => {
   try{
-    const result = await users.deleteOne({ _id: channelId });
+    const result = await channels.deleteOne({ _id: new ObjectId(channelId) });
     return result;
   }catch(err){
     console.log(JSON.stringify(err, null, 2));
@@ -43,8 +43,18 @@ const removeChannel = async(channelId) => {
 
 const getChannelById = async(channelId) => {//WORKING MONGO
   try{
-    const channel = await channels.findOne({ _id: channelId });
+    const channel = await channels.findOne({ _id: new ObjectId(channelId) });
     return channel;
+  }catch(err){
+    console.log(JSON.stringify(err, null, 2));
+    throw err;
+  }
+}
+
+const getChannelsByGroupId = async(groupId) => {//WORKING MONGO
+  try{
+    const result = await channels.find({ groupId: new ObjectId(groupId) }).sort({name: 1}).toArray();
+    return result;
   }catch(err){
     console.log(JSON.stringify(err, null, 2));
     throw err;
@@ -56,5 +66,6 @@ module.exports = {
   getAllChannels,
   createChannel,
   removeChannel,
-  getChannelById
+  getChannelById,
+  getChannelsByGroupId
 }

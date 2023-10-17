@@ -1,30 +1,23 @@
 const userService =  require("../services/users");
+const channelService =  require("../services/channels");
 
 
 
-const getChannels = async(groupId, db) => { //WORKING MONGO
+const getChannelsByGroupId = async(groupId) => { //WORKING MONGO
   try{
-    const channelsInGroup = await db.collection('channels').find({group: groupId}).sort({name: 1}).toArray();
-    return channelsInGroup;
+    const result = await channelService.getChannelsByGroupId(groupId);
+    return result;
    
   }catch(err){
-    console.log(JSON.stringify(err, null, 2));
+    console.log(err);
     throw err;
   }
 }
 
-const addChannelToGroup = async(group, db) => {
+const addChannelToGroup = async(newChannel) => {
   try{ 
-    if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
-      // const channels = channelService.addChannelToGroup(req.body.groupId, req.body.newChannelName);  
-      const channelsInGroup = await db.collection('products2').updateOne({name: product.name}, {$set:{description: product.description}}) 
-      if(channelsInGroup){
-        return channelsInGroup;
-      } 
-    }else{
-      return 'This user can not add chanel to group';
-    }
-   
+    const result = await channelService.createChannel(newChannel);
+    return result;
   }catch(err){
     console.log(JSON.stringify(err, null, 2));
     throw err;
@@ -62,15 +55,10 @@ const removeUserFromChannel = async(group, db) => {
   }
 }
 
-const removeChannel = async(channel, db) => {
+const removeChannel = async(channelId) => {
   try{
-    if ( req.body.user.roles.includes('superAdmin') || req.body.user.roles.includes('groupAdmin')){
-      // const updatedChannels = channelService.removeChannel(req.body.channelname, req.body.groupId);
-      const channelRemoved = await db.collection('products2').deleteOne({name: name});
-      return channelRemoved;
-    }else{
-      return 'This user can not promote users to admin';
-    }
+    const result = await channelService.removeChannel(channelId);
+    return result;
   }catch(err){
     console.log(JSON.stringify(err, null, 2));
     throw err;
@@ -78,8 +66,8 @@ const removeChannel = async(channel, db) => {
 }
 
 module.exports = {
-  getChannels,
   addChannelToGroup,
   removeUserFromChannel,
+  getChannelsByGroupId,
   removeChannel,
 };

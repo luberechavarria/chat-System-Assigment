@@ -41,7 +41,7 @@ const user = (db) => {
 //           groups: {
 //             bsonType: "array",
 //             items: {
-//               bsonType: "string"
+//               bsonType: "objectId"
 //             },
 //             description: 'User groups in the chat',
 //           },
@@ -210,25 +210,22 @@ const chat = (db) => {
   //         _id: {
   //           bsonType: 'objectId',
   //         },
-  //         name: {
-  //           bsonType: 'string',
-  //           description: 'Name of the product',
-  //           maxLength: 50,
+  //         username: {
+  //           bsonType: 'string'
   //         },
   //         userId: {
-  //           bsonType: 'int',
-  //           description: 'chats',
-  //           maxLength: 255,
+  //           bsonType: 'objectId'
   //         },
   //         message: {
   //           bsonType: 'string',
   //           description: 'message chat',
   //           maxLength: 255,
   //         },
-  //         description: {
-  //           bsonType: 'string',
-  //           description: 'description',
-  //           maxLength: 255,
+  //         channelId: {
+  //           bsonType: 'objectId'
+  //         },
+  //         createdAt: {
+  //           bsonType: 'string'
   //         },
   //       },
   //     },
